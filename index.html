@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Cost is Correct</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Capriola&family=D    let gameData = {};
+    let currentRound = 1;
+    let maxRounds = 4; // 3 single items + 1 showcase
+    let currentItem = null;
+    let currentShowcase = null;
+    let currentGalleryIndex = 0; // Track which item in showcase is being viewed
+    let guesses = [];
+    let maxGuesses = 2;
+    let gameOver = false;
+    let roundScores = [];
+    let totalScore = 0;
+    let roundHistory = [];:ital@0;1&family=Knewave&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: Arial, sans-serif; text-align: center; padding: 2rem; background: url('background.jpg') repeat; }
+    .game-container { display: flex; gap: 2rem; max-width: 1200px; margin: auto; align-items: flex-start; }
+    .game { background: white; padding: 2rem; border-radius: 12px; flex: 1; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+    .score-sidebar { background: white; padding: 1.5rem; border-radius: 12px; width: 250px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+            .score-sidebar h3 {
+          margin-top: 0;
+          margin-bottom: 1rem;
+          color: #333;
+        }
+
+        .total-score-display {
+          background: linear-gradient(135deg, #f0f8ff 0%, #e6f3ff 100%);
+          border: 2px solid #007acc;
+          border-radius: 8px;
+          padding: 1rem;
+          margin-bottom: 1rem;
+          text-align: center;
+        }
+
+        .round-score-display {
+          background: #f9f9f9;
+          border: 1px solid #ddd;
+          border-radius: 6px;
+          padding: 0.75rem;
+          margin-bottom: 1rem;
+          text-align: center;
+        }
+
+        .round-score-display.hidden {
+          display: none;
+        }
+
+        .score-history {
+          border-top: 1px solid #eee;
+          padding-top: 1rem;
+        }
+
+        .round-history-item {
+          font-size: 0.9rem;
+          border-bottom: 1px solid #f0f0f0;
+          padding-bottom: 0.25rem;
+        }
+
+        .round-history-item:last-child {
+          border-bottom: none;
+        }
+
+        .guess-input-container {
+          display: flex;
+          gap: 0.75rem;
+          align-items: center;
+          justify-content: flex-start;
+          margin: 1rem 0;
+        }
+
+        .guess-input-container input {
+          flex: 1;
+          min-width: 200px;
+        }
+
+        .guess-input-container button {
+          font-size: 0.8rem;
+          font-weight: bold;
+          font-family: 'Capriola', sans-serif;
+          padding: 0.4rem 0.6rem;
+          background: #dc3545;
+          border: none;
+          border-radius: 12px;
+          color: white;
+          transition: background-color 0.2s ease;
+          height: fit-content;
+        }
+
+        .guess-input-container button:hover {
+          background: #c82333;
+        }
+
+        .catalog-price-input {
+          display: flex;
+          gap: 0.5rem;
+          align-items: center;
+          justify-content: flex-start;
+          border: 2px dashed #dc3545;
+          background: white;
+          padding: 0.6rem 0.8rem;
+          border-radius: 12px;
+          width: fit-content;
+          height: 1.75rem;
+          position: relative;
+        }
+
+        .catalog-price-input::before {
+          content: "$";
+          font-size: 1.5rem;
+          font-weight: bold;
+          font-family: 'Knewave', cursive;
+          color: #2c3e50;
+          margin-right: 0.1rem;
+          line-height: 1;
+        }
+
+        .catalog-price-input input {
+          font-size: 1.5rem;
+          font-weight: bold;
+          font-family: 'Knewave', cursive;
+          color: #2c3e50;
+          border: none;
+          background: transparent;
+          text-align: left;
+          width: 30px;
+          padding: 0;
+          outline: none;
+          line-height: 1;
+          margin: 0;
+        }
+
+        .catalog-price-input input::placeholder {
+          color: #7f8c8d;
+          font-size: 1.5rem;
+          font-weight: bold;
+          font-family: 'Knewave', cursive;
+        }
+    .round-score-display { background: #f8f9fa; padding: 1rem; border-radius: 8px; margin: 1rem 0; border-left: 4px solid #007acc; }
+    .total-score-display { background: #e7f3ff; padding: 1rem; border-radius: 8px; margin: 1rem 0; text-align: center; }
+    .score-history { margin-top: 1rem; }
+    .score-history-item { display: flex; justify-content: between; padding: 0.5rem 0; border-bottom: 1px solid #eee; }
+    .score-history-item:last-child { border-bottom: none; }
+    input { padding: 0.5rem; font-size: 1rem; margin-top: 1rem; width: 150px; }
+    button { padding: 0.5rem 1rem; font-size: 1rem; margin-top: 1rem; cursor: pointer; }
+    .feedback { margin-top: 1rem; font-weight: bold; }
+    .difference { margin-top: 0.5rem; font-size: 1.2rem; color: #666; }
+    .guesses-remaining { margin-top: 0.5rem; color: #888; font-size: 0.9rem; }
+    .round-header { background: #c71c1c; color: white; padding: 1rem; margin: -2rem -2rem 1rem -2rem; border-radius: 12px 12px 0 0; }
+    .round-header h2 { font-family: "Knewave", cursive; margin: 0.5rem 0; font-size: 2.5rem; }
+    .progress-container { margin: 1rem 0; display: flex; justify-content: center; }
+    .progress-line { display: flex; align-items: center; gap: 1rem; }
+    .progress-point { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem; transition: all 0.3s ease; }
+    .progress-point.completed { background: #28a745; color: white; }
+    .progress-point.current { background: #ffc107; color: #000; transform: scale(1.2); }
+    .progress-point.upcoming { background: #6c757d; color: white; }
+    .progress-connector { width: 60px; height: 4px; background: #dee2e6; border-radius: 2px; }
+    .progress-connector.completed { background: #28a745; }
+    .catalog-layout { display: flex; align-items: flex-start; gap: 2rem; margin: 2rem 0; width: fit-content; min-width: 600px; max-width: 100%; }
+    .catalog-image { flex: 0 0 auto; }
+    .catalog-image img { width: auto; height: 350px; max-width: none; object-fit: contain; border-radius: 8px; box-shadow: 3px 3px 8px rgba(0,0,0,0.25); }
+    .catalog-details { flex: 1; text-align: left; padding: 1rem 0; min-height: 350px; min-width: 300px; }
+    .catalog-details h3 { margin-top: 0; margin-bottom: 0.3rem; font-size: 2rem; color: #333; font-family: 'Capriola', sans-serif; }
+    #showcaseTitle { margin-bottom: 0.3rem; }
+    .catalog-details p { margin: 1rem 0 1.5rem 0; line-height: 1.5; color: #555; }
+    .showcase-items { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin: 1rem 0; }
+    .showcase-item { border: 1px solid #ddd; border-radius: 8px; padding: 1rem; }
+    .showcase-item img { width: 100%; max-width: 120px; border-radius: 4px; }
+    .showcase-gallery { display: flex; align-items: center; justify-content: center; gap: 1rem; margin: 1rem 0; }
+    .gallery-content { display: flex; align-items: flex-start; gap: 2rem; max-width: 600px; }
+    .gallery-image { width: auto; height: 200px; max-width: 300px; object-fit: contain; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+    .gallery-info { text-align: left; flex: 1; padding: 1rem 0; }
+    .gallery-info h4 { margin-top: 0; font-size: 1.2rem; color: #000000; }
+    .gallery-info p { margin: 0.5rem 0; line-height: 1.4; color: #555; }
+    .gallery-nav { background: #007acc; color: white; border: none; padding: 0.5rem 1rem; border-radius: 50%; cursor: pointer; font-size: 1.2rem; }
+    .gallery-nav:hover { background: #005a99; }
+    .gallery-nav:disabled { background: #ccc; cursor: not-allowed; }
+    .gallery-counter { margin-top: 0.5rem; font-size: 0.9rem; color: #666; }
+    .store-info { display: flex; align-items: center; justify-content: flex-start; gap: 0.5rem; margin: 0.2rem 0; }
+    .store-logo { height: 24px; width: auto; max-width: 80px; object-fit: contain; }
+    .store-name { font-size: 0.9rem; color: #666; }
+    #itemDescription, #galleryDescription { font-family: "DM Serif Text", serif; font-style: italic; }
+    .score-text { font-weight: bold; font-size: 1.1rem; }
+    .score-excellent { color: #006400; } /* Dark green for 900-1000+ */
+    .score-great { color: #228b22; } /* Green for 800-899 */
+    .score-good { color: #32cd32; } /* Lime green for 700-799 */
+    .score-okay { color: #ffa500; } /* Orange for 500-699 */
+    .score-poor { color: #ff4500; } /* Red orange for 300-499 */
+    .score-bad { color: #dc143c; } /* Crimson for 100-299 */
+    .score-terrible { color: #8b0000; } /* Dark red for 0-99 */
+    .image-modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); }
+    .modal-content { display: flex; justify-content: center; align-items: center; height: 100%; padding: 20px; }
+    .modal-image { max-width: 90%; max-height: 90%; object-fit: contain; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.5); }
+    .close-modal { position: absolute; top: 20px; right: 30px; color: white; font-size: 40px; font-weight: bold; cursor: pointer; }
+    .close-modal:hover { color: #ccc; }
+    .clickable-image { cursor: pointer; transition: opacity 0.2s ease; }
+    .clickable-image:hover { opacity: 0.9; }
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+  <div class="game-container">
+    <div class="game">
+      <div class="round-header">
+        <h2>THE COST IS CORRECT!</h2>
+        <div class="progress-container">
+          <div class="progress-line">
+            <div class="progress-point current" id="point1">1</div>
+            <div class="progress-connector" id="connector1"></div>
+            <div class="progress-point upcoming" id="point2">2</div>
+            <div class="progress-connector" id="connector2"></div>
+            <div class="progress-point upcoming" id="point3">3</div>
+            <div class="progress-connector" id="connector3"></div>
+            <div class="progress-point upcoming" id="point4">🏆</div>
+          </div>
+        </div>
+      </div>
+
+    <!-- Single Item Display -->
+    <div id="singleItemView">
+      <div class="catalog-layout">
+        <div class="catalog-image">
+          <img id="itemImage" class="clickable-image" src="" alt="Item" onclick="openImageModal(this.src)">
+        </div>
+        <div class="catalog-details">
+          <h3 id="itemTitle">Loading...</h3>
+          <div class="store-info">
+            <img id="storeLogoSingle" class="store-logo" src="" alt="Store">
+            <span id="storeNameSingle" class="store-name">Store</span>
+          </div>
+          <div class="guess-input-container">
+            <div class="catalog-price-input">
+              <input type="number" id="guessInput" placeholder="0" />
+            </div>
+            <button onclick="makeGuess()" id="guessButton">Submit</button>
+          </div>
+          <p id="itemDescription">Loading item...</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Showcase Display -->
+    <div id="showcaseView" class="hidden">
+      <h3 id="showcaseTitle">Showcase Showdown</h3>
+      <div class="store-info">
+        <img id="storeLogoShowcase" class="store-logo" src="" alt="Store">
+        <span id="storeNameShowcase" class="store-name">Store</span>
+      </div>
+      <div class="guess-input-container">
+        <div class="catalog-price-input">
+          <input type="number" id="guessInputShowcase" placeholder="0" />
+        </div>
+        <button onclick="makeGuess()" id="guessButtonShowcase">Submit</button>
+      </div>
+      <div class="showcase-gallery">
+        <button class="gallery-nav" id="prevBtn" onclick="navigateGallery(-1)">‹</button>
+        <div class="gallery-content">
+          <img id="galleryImage" class="gallery-image clickable-image" src="" alt="Showcase Item" onclick="openImageModal(this.src)">
+          <div class="gallery-info">
+            <h4 id="galleryTitle">Item Title</h4>
+            <p id="galleryDescription">Item description</p>
+          </div>
+        </div>
+        <button class="gallery-nav" id="nextBtn" onclick="navigateGallery(1)">›</button>
+      </div>
+      <div class="gallery-counter">
+        <span id="galleryCounter">1 of 3</span>
+      </div>
+      <p><strong>Guess the total price of all items!</strong></p>
+    </div>
+
+    <div class="feedback" id="feedback"></div>
+    <div class="guesses-remaining" id="guessesRemaining">Guesses remaining: 3</div>
+    <div id="result"></div>
+    </div>
+
+    <!-- Score Sidebar -->
+    <div class="score-sidebar">
+      <h3>📊 Score Tracker</h3>
+      <div class="total-score-display">
+        <div><strong>Total Score</strong></div>
+        <div id="sidebarTotalScore" style="font-size: 1.5rem; color: #007acc; font-weight: bold;">0</div>
+        <div style="font-size: 0.9rem; color: #666;">out of 5,000 points</div>
+      </div>
+      
+      <div class="round-score-display hidden" id="currentRoundScore">
+        <div><strong>Round <span id="currentRoundNumber">1</span> Result</strong></div>
+        <div id="roundScoreValue" class="score-text" style="font-size: 1.3rem; margin: 0.5rem 0;">0 points</div>
+        <div id="roundScoreDetails" style="font-size: 0.9rem; color: #666;"></div>
+      </div>
+      
+      <div class="score-history">
+        <div style="font-weight: bold; margin-bottom: 0.5rem;">Round History</div>
+        <div id="scoreHistoryList"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Image Modal -->
+  <div id="imageModal" class="image-modal">
+    <span class="close-modal" onclick="closeImageModal()">&times;</span>
+    <div class="modal-content">
+      <img id="modalImage" class="modal-image" src="" alt="Full Size Image">
+    </div>
+  </div>
+
+  <script>
+    let gameData = {};
+    let currentRound = 1;
+    let maxRounds = 4; // 3 single items + 1 showcase
+    let currentItem = null;
+    let currentShowcase = null;
+    let currentGalleryIndex = 0; // Track which item in showcase is being viewed
+    let guesses = [];
+    let maxGuesses = 2;
+    let gameOver = false;
+    let totalScore = 0;
+    let roundScores = [];
+    let roundHistory = [];
+
+    // Load items and set up daily challenge
+    async function loadItems() {
+      try {
+        const response = await fetch('items.json');
+        gameData = await response.json();
+        setupDailyChallenge();
+      } catch (error) {
+        console.error('Could not load items:', error);
+        // Fallback data
+        gameData = {
+          single_items: [{
+            id: 1,
+            title: "Microwave Oven",
+            description: "Standard countertop microwave, 1000W",
+            price: 120,
+            image: "https://images.unsplash.com/photo-1574269909862-7e1d70bb8078?w=400&h=300&fit=crop"
+          }],
+          showcases: [{
+            id: 1,
+            title: "Kitchen Bundle",
+            items: [{ title: "Toaster", price: 50, image: "", description: "2-slice toaster" }],
+            total_price: 50
+          }]
+        };
+        setupDailyChallenge();
+      }
+    }
+
+    // Use today's date to pick items for the day
+    function setupDailyChallenge() {
+      const today = new Date();
+      const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / 86400000);
+      
+      // Pick 3 single items and 1 showcase for today
+      const singleItemsToday = [];
+      for (let i = 0; i < 3; i++) {
+        const itemIndex = (dayOfYear + i) % gameData.single_items.length;
+        singleItemsToday.push(gameData.single_items[itemIndex]);
+      }
+      const showcaseIndex = dayOfYear % gameData.showcases.length;
+      const showcaseToday = gameData.showcases[showcaseIndex];
+      
+      gameData.todaysGame = {
+        rounds: [...singleItemsToday, showcaseToday]
+      };
+      
+      startRound();
+    }
+
+    // Calculate percentage-based score (more granular - out of 1000 points)
+    function calculateScore(guess, actualPrice) {
+      if (guess > actualPrice) return 0; // Bust = 0 points
+      
+      const percentageOff = Math.abs((guess - actualPrice) / actualPrice);
+      
+      if (percentageOff === 0) return 1000; // Perfect guess
+      
+      // Deduct 10 points per 0.1% off (so 1% off = -100 points)
+      // percentageOff is a decimal (e.g., 0.05 = 5%), multiply by 1000 to get points deducted
+      const pointsDeducted = Math.floor(percentageOff * 1000);
+      const score = Math.max(0, 1000 - pointsDeducted);
+      
+      return score;
+    }
+
+    // Show formatted result message
+    function showResultMessage(htmlContent) {
+      // Create modal backdrop
+      const backdrop = document.createElement('div');
+      backdrop.style.cssText = `
+        position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+        background: rgba(0,0,0,0.5); display: flex; justify-content: center; 
+        align-items: center; z-index: 1000;
+      `;
+      
+      // Create modal content
+      const modal = document.createElement('div');
+      modal.style.cssText = `
+        background: white; padding: 2rem; border-radius: 12px; 
+        max-width: 400px; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        font-family: Arial, sans-serif; line-height: 1.6;
+      `;
+      
+      // Determine button text based on game state
+      let buttonText = 'Continue';
+      if (currentRound < maxRounds) {
+        buttonText = currentRound === 3 ? 'Start Showcase!' : 'Next Round';
+      } else {
+        buttonText = 'View Final Results';
+      }
+      
+      const actionButton = document.createElement('button');
+      actionButton.textContent = buttonText;
+      actionButton.style.cssText = `
+        background: #007acc; color: white; border: none; padding: 0.75rem 1.5rem; 
+        border-radius: 8px; cursor: pointer; font-size: 1.1rem; font-weight: bold; 
+        margin-top: 1rem; transition: background 0.2s;
+      `;
+      
+      // Add hover effect
+      actionButton.addEventListener('mouseenter', () => {
+        actionButton.style.background = '#005a99';
+      });
+      actionButton.addEventListener('mouseleave', () => {
+        actionButton.style.background = '#007acc';
+      });
+      
+      modal.innerHTML = htmlContent;
+      modal.appendChild(actionButton);
+      backdrop.appendChild(modal);
+      document.body.appendChild(backdrop);
+      
+      // Function to close modal and continue game
+      const proceedToNext = () => {
+        backdrop.remove();
+        
+        if (currentRound < maxRounds) {
+          // Start next round
+          currentRound++;
+          startRound();
+        } else {
+          // Show final results
+          showFinalResults();
+        }
+      };
+      
+      actionButton.addEventListener('click', proceedToNext);
+      backdrop.addEventListener('click', (e) => {
+        if (e.target === backdrop) proceedToNext();
+      });
+    }
+
+    // Get CSS class based on score value
+    function getScoreColorClass(score) {
+      if (score >= 900) return 'score-excellent';
+      if (score >= 800) return 'score-great';
+      if (score >= 700) return 'score-good';
+      if (score >= 500) return 'score-okay';
+      if (score >= 300) return 'score-poor';
+      if (score >= 100) return 'score-bad';
+      return 'score-terrible';
+    }
+
+    // Start a new round
+    function startRound() {
+      if (currentRound > maxRounds) {
+        showFinalResults();
+        return;
+      }
+      
+      guesses = [];
+      gameOver = false;
+      currentGalleryIndex = 0; // Reset gallery index for new round
+      document.getElementById('guessInput').value = '';
+      document.getElementById('guessInputShowcase').value = '';
+      document.getElementById('feedback').textContent = '';
+      document.getElementById('result').textContent = '';
+      document.getElementById('guessesRemaining').textContent = 'Guesses remaining: 2';
+      
+      // Hide current round score display when starting new round
+      document.getElementById('currentRoundScore').classList.add('hidden');
+      
+      const roundData = gameData.todaysGame.rounds[currentRound - 1];
+      
+      if (currentRound <= 3) {
+        // Single item round
+        currentItem = roundData;
+        currentShowcase = null;
+        setupSingleItemRound();
+      } else {
+        // Showcase round
+        currentShowcase = roundData;
+        currentItem = null;
+        setupShowcaseRound();
+      }
+      
+      updateRoundDisplay();
+    }
+
+    function setupSingleItemRound() {
+      document.getElementById('singleItemView').classList.remove('hidden');
+      document.getElementById('showcaseView').classList.add('hidden');
+      
+      document.getElementById('itemImage').src = currentItem.image;
+      document.getElementById('itemTitle').textContent = currentItem.title;
+      document.getElementById('itemDescription').textContent = currentItem.description;
+      
+      // Display store information
+      if (currentItem.store) {
+        document.getElementById('storeLogoSingle').src = currentItem.store.logo;
+        document.getElementById('storeNameSingle').textContent = currentItem.store.name;
+      }
+    }
+
+    function setupShowcaseRound() {
+      document.getElementById('singleItemView').classList.add('hidden');
+      document.getElementById('showcaseView').classList.remove('hidden');
+      
+      document.getElementById('showcaseTitle').textContent = currentShowcase.title;
+      
+      // Display store information for showcase
+      if (currentShowcase.store) {
+        document.getElementById('storeLogoShowcase').src = currentShowcase.store.logo;
+        document.getElementById('storeNameShowcase').textContent = currentShowcase.store.name;
+      }
+      
+      // Reset gallery to first item
+      currentGalleryIndex = 0;
+      updateGalleryDisplay();
+    }
+
+    // Navigate through showcase gallery
+    function navigateGallery(direction) {
+      const newIndex = currentGalleryIndex + direction;
+      if (newIndex >= 0 && newIndex < currentShowcase.items.length) {
+        currentGalleryIndex = newIndex;
+        updateGalleryDisplay();
+      }
+    }
+
+    // Update the gallery display with current item
+    function updateGalleryDisplay() {
+      const currentGalleryItem = currentShowcase.items[currentGalleryIndex];
+      
+      document.getElementById('galleryImage').src = currentGalleryItem.image;
+      document.getElementById('galleryTitle').textContent = currentGalleryItem.title;
+      document.getElementById('galleryDescription').textContent = currentGalleryItem.description;
+      
+      // Update counter
+      document.getElementById('galleryCounter').textContent = 
+        `${currentGalleryIndex + 1} of ${currentShowcase.items.length}`;
+      
+      // Update navigation buttons
+      document.getElementById('prevBtn').disabled = currentGalleryIndex === 0;
+      document.getElementById('nextBtn').disabled = currentGalleryIndex === currentShowcase.items.length - 1;
+    }
+
+    function updateRoundDisplay() {
+      const roundNumber = currentRound + 1;
+      const roundTitle = roundNumber <= 3 ? `Round ${roundNumber}` : 'Showcase Showdown';
+      document.getElementById('round-title').textContent = roundTitle;
+      document.getElementById('progress-bar').style.width = `${(currentRound / 4) * 100}%`;
+      document.getElementById('progress-text').textContent = `${currentRound}/4 Rounds Complete`;
+      
+      // Initialize/update sidebar
+      updateSidebar();
+    }
+
+    function updateSidebar() {
+      // Update total score
+      document.getElementById('sidebarTotalScore').textContent = totalScore.toLocaleString();
+      
+      // Update score history
+      const historyList = document.getElementById('scoreHistoryList');
+      historyList.innerHTML = '';
+      
+      roundHistory.forEach((round, index) => {
+        const roundDiv = document.createElement('div');
+        roundDiv.className = 'round-history-item';
+        roundDiv.innerHTML = `
+          <div style="display: flex; justify-content: space-between; margin: 0.25rem 0;">
+            <span>Round ${index + 1}${index === 3 ? ' (Showcase)' : ''}</span>
+            <span class="${round.scoreClass}" style="font-weight: bold;">${round.score} pts</span>
+          </div>
+        `;
+        historyList.appendChild(roundDiv);
+      });
+    }
+
+    function showCurrentRoundScore(score, details, scoreClass) {
+      const currentRoundElement = document.getElementById('currentRoundScore');
+      const roundNumberElement = document.getElementById('currentRoundNumber');
+      const scoreValueElement = document.getElementById('roundScoreValue');
+      const scoreDetailsElement = document.getElementById('roundScoreDetails');
+      
+      roundNumberElement.textContent = currentRound + 1;
+      scoreValueElement.textContent = `${score.toLocaleString()} points`;
+      scoreValueElement.className = `score-text ${scoreClass}`;
+      scoreDetailsElement.textContent = details;
+      
+      currentRoundElement.classList.remove('hidden');
+    }
+
+    function updateRoundDisplay() {
+      // Update progress indicator
+      for (let i = 1; i <= 4; i++) {
+        const point = document.getElementById(`point${i}`);
+        const connector = document.getElementById(`connector${i}`);
+        
+        if (i < currentRound) {
+          // Completed rounds
+          point.className = 'progress-point completed';
+          if (connector) connector.className = 'progress-connector completed';
+        } else if (i === currentRound) {
+          // Current round
+          point.className = 'progress-point current';
+          if (connector) connector.className = 'progress-connector';
+        } else {
+          // Upcoming rounds
+          point.className = 'progress-point upcoming';
+          if (connector) connector.className = 'progress-connector';
+        }
+      }
+    }
+
+    // Initialize the game when page loads
+    window.onload = loadItems;
+
+    function makeGuess() {
+      if (gameOver) return;
+      
+      // Get the appropriate input field based on current round
+      const isShowcase = currentRound === 4;
+      const inputId = isShowcase ? 'guessInputShowcase' : 'guessInput';
+      const input = document.getElementById(inputId);
+      const guess = parseInt(input.value);
+      if (isNaN(guess)) return;
+
+      guesses.push(guess);
+      
+      const actualPrice = currentItem ? currentItem.price : currentShowcase.total_price;
+
+      if (guess > actualPrice) {
+        document.getElementById('feedback').textContent = `You guessed $${guess} — BUST! Over the price.`;
+        document.getElementById('guessesRemaining').textContent = '';
+        endRound(false, actualPrice);
+        return;
+      }
+
+      const remaining = maxGuesses - guesses.length;
+      
+      if (guesses.length < maxGuesses) {
+        document.getElementById('feedback').textContent = `You guessed $${guess}. You are UNDER. Try again!`;
+        document.getElementById('guessesRemaining').textContent = `Guesses remaining: ${remaining}`;
+      } else {
+        document.getElementById('guessesRemaining').textContent = '';
+        endRound(true, actualPrice);
+      }
+      input.value = '';
+    }
+
+    function endRound(finalRound, actualPrice) {
+      gameOver = true;
+      const lastGuess = guesses[guesses.length - 1];
+      let roundScore = 0;
+
+      if (!finalRound) {
+        let resultText = `<strong>Actual retail price was $${actualPrice}.</strong><br>You busted out! 0 points this round.`;
+        showResultMessage(resultText);
+      } else {
+        const diff = actualPrice - lastGuess;
+        roundScore = calculateScore(lastGuess, actualPrice);
+        
+        // Double points for showcase round (round 4)
+        if (currentRound === 4) {
+          roundScore *= 2;
+        }
+        
+        let resultText = `<strong>Actual retail price was $${actualPrice}.</strong><br>`;
+        
+        if (diff === 0) {
+          resultText += `Perfect guess! 🎉`;
+        } else {
+          const percentageOff = (diff / actualPrice * 100).toFixed(1);
+          resultText += `You were ${percentageOff}% under.`;
+        }
+        
+        // Add showcase bonus indicator
+        if (currentRound === 4) {
+          resultText += `<br><br>🎯 SHOWCASE DOUBLE POINTS! 🎯`;
+        }
+        
+        // Add colored score
+        const scoreClass = getScoreColorClass(roundScore);
+        resultText += `<br><span class="score-text ${scoreClass}">Round Score: ${roundScore.toLocaleString()} points</span>`;
+        
+        // Show formatted result
+        showResultMessage(resultText);
+      }
+
+      roundScores.push(roundScore);
+      totalScore += roundScore;
+      
+      // Add round to history
+      let scoreClass = 'score-zero';
+      let details = '';
+      if (!finalRound) {
+        details = 'Busted (over price)';
+      } else {
+        const diff = actualPrice - lastGuess;
+        const percentageOff = (diff / actualPrice * 100).toFixed(1);
+        details = diff === 0 ? 'Perfect guess!' : `${percentageOff}% under`;
+        scoreClass = getScoreColorClass(roundScore);
+      }
+      
+      roundHistory.push({
+        score: roundScore,
+        scoreClass: scoreClass,
+        details: details
+      });
+      
+      // Update sidebar displays
+      updateSidebar();
+      showCurrentRoundScore(roundScore, details, scoreClass);
+      
+      document.getElementById('result').innerHTML = resultText.replace(/\n/g, '<br>');
+      
+      // Add colored score display
+      if (finalRound && roundScore > 0) {
+        const scoreElement = document.createElement('div');
+        scoreElement.className = `score-text ${getScoreColorClass(roundScore)}`;
+        scoreElement.textContent = `Round Score: ${roundScore.toLocaleString()} points`;
+        document.getElementById('result').appendChild(scoreElement);
+      }
+      
+      updateRoundDisplay();
+    }
+
+    // Image modal functions
+    function openImageModal(imageSrc) {
+      document.getElementById('modalImage').src = imageSrc;
+      document.getElementById('imageModal').style.display = 'block';
+    }
+
+    function closeImageModal() {
+      document.getElementById('imageModal').style.display = 'none';
+    }
+
+    // Close modal when clicking outside the image
+    document.getElementById('imageModal').onclick = function(event) {
+      if (event.target === this) {
+        closeImageModal();
+      }
+    };
+
+    // Close modal with Escape key
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'Escape') {
+        closeImageModal();
+      }
+    });
+
+    function showFinalResults() {
+      let grade = 'F';
+      if (totalScore >= 4500) grade = 'A+';  // 90%+
+      else if (totalScore >= 4000) grade = 'A';   // 80%+
+      else if (totalScore >= 3500) grade = 'B+';  // 70%+
+      else if (totalScore >= 3000) grade = 'B';   // 60%+
+      else if (totalScore >= 2500) grade = 'C+';  // 50%+
+      else if (totalScore >= 2000) grade = 'C';   // 40%+
+      else if (totalScore >= 1500) grade = 'D';   // 30%+
+      
+      document.getElementById('result').innerHTML = `
+        <h3>🎉 Game Complete!</h3>
+        <p><strong>Final Score: ${totalScore.toLocaleString()} / 5,000 points</strong></p>
+        <p><strong>Grade: ${grade}</strong></p>
+        <p>Come back tomorrow for a new challenge!</p>
+      `;
+    }
+  </script>
+</body>
+</html>

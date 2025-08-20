@@ -1,0 +1,152 @@
+{
+  "single_items": [
+    {
+      "id": 1,
+      "title": "La Creuset Enameled Cast Iron Bread Oven",
+      "description": "Designed to reproduce the effects of brick-oven baking, this enameled cast-iron bread oven from Le Creuset absorbs and retains heat evenly. It also redistributes the steam released by the dough as it cooks. This yields loaves with moist and tender interiors, light crumbs and crisp browned crusts.",
+      "price": 300,
+      "image": "images/items/item_1.jpg",
+      "store": {
+        "name": "Williams Sonoma",
+        "logo": "images/logos/williams-sonoma.png"
+      }
+    },
+    {
+      "id": 2,
+      "title": "Apple Homepod (2nd Gen)",
+      "description": "The all-new HomePod delivers groundbreaking, premium sound, from clear, detailed highs to deep, rich bass. Advanced computational audio pushes acoustics further. Spatial Audio provides even more immersive sound.  Works seamlessly with all your Apple devices.  Connect and control your smart home, privately and securely.",
+      "price": 299,
+      "image": "images/items/item_2.jpg",
+      "store": {
+        "name": "Apple Store",
+        "logo": "images/logos/apple.png"
+      }
+    },
+    {
+      "id": 3,
+      "title": "Stockholm Sideboard",
+      "description": "The sideboard in walnut veneer and solid ash brings a warm, natural feeling to your room. The distinctive grain pattern in the walnut veneer gives each piece of furniture a unique character. Walnut is a naturally hardwearing material. The surface has been made even more durable by a protective coat of lacquer. Push openers give the sideboard a streamlined look with no handles or knobs needed. Inside the sideboard are two drawers and two adjustable shelves in walnut veneer and solid wood. The sideboard has adjustable feet so it stands evenly on uneven floors.",
+      "price": 499,
+      "image": "images/items/item_3.jpg",
+      "store": {
+        "name": "IKEA",
+        "logo": "images/logos/ikea.png"
+      }
+    },
+    {
+      "id": 4,
+      "title": "Nintendo Switch OLED",
+      "description": "Gaming console with 7-inch OLED screen",
+      "price": 349,
+      "image": "images/items/item_4.jpg",
+      "store": {
+        "name": "GameStop",
+        "logo": "images/logos/gamestop.png"
+      }
+    },
+    {
+      "id": 5,
+      "title": "Instant Pot Duo 7-in-1",
+      "description": "6-quart pressure cooker, slow cooker, rice cooker",
+      "price": 99,
+      "image": "images/items/item_5.jpg",
+      "store": {
+        "name": "Sur La Table",
+        "logo": "images/logos/sur-la-table.png"
+      }
+    },
+    {
+      "id": 6,
+      "title": "Apple AirPods Pro (2nd Gen)",
+      "description": "Active noise cancelling wireless earbuds",
+      "price": 249,
+      "image": "images/items/item_6.jpg",
+      "store": {
+        "name": "Apple Store",
+        "logo": "images/logos/apple.png"
+      }
+    },
+    {
+      "id": 7,
+      "title": "Keurig K-Elite Coffee Maker",
+      "description": "Single serve K-cup coffee maker with iced coffee setting",
+      "price": 169,
+      "image": "images/items/item_7.jpg",
+      "store": {
+        "name": "Crate & Barrel",
+        "logo": "images/logos/crate-barrel.png"
+      }
+    },
+    {
+      "id": 8,
+      "title": "Bar Cart with Casters",
+      "description": "Add a bright spot to your contemporary space with the Wynora bar cart. Its beautifully bold blend of goldtone metal and mirrored glass heightens your home's modern aesthetic. It’s a striking choice for your kitchen or entryway, with locking casters allowing you to serve in style whenever and wherever it's needed.",
+      "price": 109,
+      "image": "images/items/item_8.png",
+      "store": {
+        "name": "Ashley Furniture",
+        "logo": "images/logos/ashley.png"
+      }
+    }
+  ],
+  "showcases": [
+    {
+      "id": 1,
+      "title": "Kitchen Essentials Package",
+      "store": {
+        "name": "Williams Sonoma",
+        "logo": "images/logos/williams-sonoma.png"
+      },
+      "items": [
+        {
+          "title": "Coffee Maker",
+          "description": "12-cup programmable coffee maker",
+          "price": 89,
+          "image": "images/showcases/showcase_1_item_1.jpg"
+        },
+        {
+          "title": "Toaster Oven",
+          "description": "6-slice convection toaster oven",
+          "price": 129,
+          "image": "images/showcases/showcase_1_item_2.jpg"
+        },
+        {
+          "title": "Stand Mixer",
+          "description": "5-quart tilt-head stand mixer",
+          "price": 279,
+          "image": "images/showcases/showcase_1_item_3.jpg"
+        }
+      ],
+      "total_price": 497
+    },
+    {
+      "id": 2,
+      "title": "Tech Starter Bundle",
+      "store": {
+        "name": "B&H Photo",
+        "logo": "images/logos/bh-photo.png"
+      },
+      "items": [
+        {
+          "title": "Wireless Headphones",
+          "description": "Noise-cancelling over-ear headphones",
+          "price": 199,
+          "image": "images/showcases/showcase_2_item_1.jpg"
+        },
+        {
+          "title": "Tablet",
+          "description": "10-inch tablet with 64GB storage",
+          "price": 329,
+          "image": "images/showcases/showcase_2_item_2.jpg"
+        },
+        {
+          "title": "Wireless Charger",
+          "description": "Fast wireless charging pad",
+          "price": 39,
+          "image": "images/showcases/showcase_2_item_3.jpg"
+        }
+      ],
+      "total_price": 567
+    }
+  ]
+}
