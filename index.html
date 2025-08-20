@@ -417,17 +417,17 @@
       const actionButton = document.createElement('button');
       actionButton.textContent = buttonText;
       actionButton.style.cssText = `
-        background: #007acc; color: white; border: none; padding: 0.75rem 1.5rem; 
+        background: #dc2626; color: white; border: none; padding: 0.75rem 1.5rem; 
         border-radius: 8px; cursor: pointer; font-size: 1.1rem; font-weight: bold; 
-        margin-top: 1rem; transition: background 0.2s;
+        margin-top: 1.5rem; transition: background 0.2s; display: block; width: 100%;
       `;
       
       // Add hover effect
       actionButton.addEventListener('mouseenter', () => {
-        actionButton.style.background = '#005a99';
+        actionButton.style.background = '#b91c1c';
       });
       actionButton.addEventListener('mouseleave', () => {
-        actionButton.style.background = '#007acc';
+        actionButton.style.background = '#dc2626';
       });
       
       modal.innerHTML = htmlContent;
