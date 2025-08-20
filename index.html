@@ -6,20 +6,13 @@
   <title>The Cost is Correct</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Capriola&family=DM+Serif+Text:ital@0;1&family=Knewave&family=Monofett&family=Trocchi&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Capriola&family=DM+Serif+Text:ital@0;1&family=Knewave&family=Monofett&family=Monoton&family=Trocchi&display=swap" rel="stylesheet">
   <style>
     body { font-family: Arial, sans-serif; text-align: center; padding: 2rem; background: url('background.png') repeat; }
     .game-container { display: flex; gap: 2rem; max-width: 1200px; margin: auto; align-items: flex-start; }
-    .game { background: white; padding: 2rem; border-radius: 12px; flex: 1; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-    .score-sidebar { background: white; padding: 1.5rem; border-radius: 12px; width: 250px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+    .game { background: white; padding: 2rem; border-radius: 30px; flex: 1; box-shadow: 14px 14px .25px rgba(0,0,0,0.5); border: 3px solid #000000; }
+    .score-sidebar { background: white; padding: 1.5rem; border-radius: 12px; width: 250px; box-shadow: 14px 14px 1px rgba(0,0,0,0.5); border: 3px solid #000000; }
     
-    .round-header h2 { 
-      font-family: 'Kneawave', cursive; 
-      font-size: 5rem; 
-      color: #ffffff; 
-      margin: 0 0 1rem 0; 
-      text-shadow: 4px 4px 2px rgba(0,0,0,0.6); 
-    }
             .score-sidebar h3 {
           margin-top: 0;
           margin-bottom: 1rem;
@@ -105,7 +98,7 @@
           align-items: center;
           justify-content: flex-start;
           border: 2px dashed #dc3545;
-          background: white;
+          background: rgb(245, 245, 245);
           padding: 0.6rem 0.8rem;
           border-radius: 12px;
           width: fit-content;
@@ -154,8 +147,14 @@
     .feedback { margin-top: 1rem; font-weight: bold; }
     .difference { margin-top: 0.5rem; font-size: 1.2rem; color: #666; }
     .guesses-remaining { margin-top: 0.5rem; color: #888; font-size: 0.9rem; }
-    .round-header { background: #c71c1c; color: white; padding: 1rem; margin: -2rem -2rem 1rem -2rem; border-radius: 12px 12px 0 0; }
-    .round-header h2 { font-family: "Capriola", sans-serif; margin: 0.5rem 0; font-size: 2.5rem; }
+    .round-header { background: #8d8d8d; color: rgb(255, 255, 255); padding: 0.75rem; margin: -2rem -2rem 1rem -2rem; border-radius: 27px 27px 0 0; }
+    .round-header h2 { 
+      font-family: "Monoton", cursive; 
+      margin: 0.1rem 0; 
+      font-size: 3.5rem; 
+      color: #ffffff; 
+      text-shadow: 4px 4px .25px rgba(0,0,0,0.8); 
+    }
     .game-subtitle { font-size: 0.9rem; margin: .5rem 5rem 1rem 5rem; color: #f0f0f0; font-weight: normal; line-height: 2; }
     .progress-container { margin: 1rem 0; display: flex; justify-content: center; }
     .progress-line { display: flex; align-items: center; gap: 1rem; }
@@ -214,6 +213,45 @@
       color: #28a745;
       font-size: 1.8rem;
     }
+    
+    .preview-navigation {
+      background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+      border: 2px solid #ffc107;
+      border-radius: 8px;
+      padding: 1rem;
+      margin: 1rem 0;
+      display: none;
+      text-align: center;
+    }
+    .preview-navigation.active {
+      display: block;
+    }
+    .preview-nav-buttons {
+      display: flex;
+      gap: 0.5rem;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-top: 0.5rem;
+    }
+    .preview-nav-btn {
+      background: #007acc;
+      color: white;
+      border: none;
+      padding: 0.3rem 0.8rem;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .preview-nav-btn:hover {
+      background: #005a99;
+    }
+    .preview-nav-btn.current {
+      background: #28a745;
+    }
+    
     .final-score {
       font-size: 1.3rem;
       color: #495057;
@@ -256,6 +294,20 @@
             <div class="progress-point upcoming" id="point3">3</div>
             <div class="progress-connector" id="connector3"></div>
             <div class="progress-point upcoming" id="point4">🏆</div>
+          </div>
+        </div>
+        
+        <!-- Preview Navigation (hidden by default) -->
+        <div class="preview-navigation" id="previewNavigation">
+          <div style="font-weight: bold; margin-bottom: 0.5rem;">📅 Preview Mode</div>
+          <div class="preview-nav-buttons">
+            <a href="?" class="preview-nav-btn">Today</a>
+            <a href="?preview=1" class="preview-nav-btn">Tomorrow</a>
+            <a href="?preview=2" class="preview-nav-btn">+2 Days</a>
+            <a href="?preview=3" class="preview-nav-btn">+3 Days</a>
+            <a href="?preview=7" class="preview-nav-btn">+1 Week</a>
+            <a href="?preview=30" class="preview-nav-btn">+1 Month</a>
+            <a href="?preview=-1" class="preview-nav-btn">Yesterday</a>
           </div>
         </div>
       </div>
@@ -409,8 +461,22 @@
 
     // Use today's date to pick items for the day
     function setupDailyChallenge() {
+      // Check for preview mode
+      const urlParams = new URLSearchParams(window.location.search);
+      const previewDays = parseInt(urlParams.get('preview')) || 0;
+      
       const today = new Date();
-      const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / 86400000);
+      const targetDate = new Date(today.getTime() + (previewDays * 24 * 60 * 60 * 1000));
+      const dayOfYear = Math.floor((targetDate - new Date(targetDate.getFullYear(), 0, 0)) / 86400000);
+      
+      // Add preview indicator if in preview mode
+      if (previewDays !== 0) {
+        const previewDate = targetDate.toLocaleDateString();
+        const previewText = previewDays > 0 ? `${previewDays} days in the future` : `${Math.abs(previewDays)} days in the past`;
+        document.querySelector('.game-subtitle').innerHTML = 
+          `<span style="color: #ffcc00; font-weight: bold;">🔍 PREVIEW MODE: ${previewText} (${previewDate})</span><br>` + 
+          document.querySelector('.game-subtitle').textContent;
+      }
       
       // Filter out items without proper data (empty title, no price, or no image)
       const validSingleItems = gameData.single_items.filter(item => 
@@ -426,9 +492,10 @@
       );
       
       // Pick 3 single items and 1 showcase for today from valid items only
+      // Use dayOfYear * 3 to ensure each day gets completely unique items
       const singleItemsToday = [];
       for (let i = 0; i < 3; i++) {
-        const itemIndex = (dayOfYear + i) % validSingleItems.length;
+        const itemIndex = (dayOfYear * 3 + i) % validSingleItems.length;
         singleItemsToday.push(validSingleItems[itemIndex]);
       }
       const showcaseIndex = dayOfYear % validShowcases.length;
@@ -437,6 +504,24 @@
       gameData.todaysGame = {
         rounds: [...singleItemsToday, showcaseToday]
       };
+      
+      // Show preview navigation if URL has preview parameter or if it's in preview mode
+      const currentPreview = parseInt(urlParams.get('preview')) || 0;
+      const previewNav = document.getElementById('previewNavigation');
+      
+      if (urlParams.has('preview') || currentPreview !== 0) {
+        previewNav.classList.add('active');
+        
+        // Highlight current preview option
+        document.querySelectorAll('.preview-nav-btn').forEach(btn => {
+          btn.classList.remove('current');
+          const btnUrl = new URL(btn.href);
+          const btnPreview = parseInt(btnUrl.searchParams.get('preview')) || 0;
+          if (btnPreview === currentPreview) {
+            btn.classList.add('current');
+          }
+        });
+      }
       
       startRound();
     }
@@ -761,9 +846,9 @@
         let underMessage = '';
         
         if (percentageOff >= 0.5) {
-          underMessage = 'WAY UNDER';
+          underMessage = 'WAY FAR OFF';
         } else if (percentageOff >= 0.35) {
-          underMessage = 'WELL UNDER';
+          underMessage = 'PRETTY FAR OFF';
         } else if (percentageOff >= 0.25) {
           underMessage = 'UNDER';
         } else if (percentageOff >= 0.15) {
@@ -787,7 +872,7 @@
       let roundScore = 0;
 
       if (!finalRound) {
-        let resultText = `<strong>Actual retail price was $${actualPrice}.</strong><br>You busted out! 0 points this round.`;
+        let resultText = `<strong>Actual retail price: $${actualPrice}.</strong><br>You busted out! 0 points this round.`;
         showResultMessage(resultText);
       } else {
         const diff = actualPrice - lastGuess;
@@ -798,7 +883,7 @@
           roundScore *= 2;
         }
         
-        let resultText = `<strong>Actual retail price was $${actualPrice}.</strong><br>`;
+        let resultText = `<strong>Actual retail price: $${actualPrice}.</strong><br>`;
         
         if (diff === 0) {
           resultText += `Wow! You were right on the money with that one! 🎉`;

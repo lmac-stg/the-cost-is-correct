@@ -362,23 +362,23 @@
     },
     {
       "id": 2,
-      "title": "Tech Starter Bundle",
+      "title": "Staycation Essentials",
       "store": {
         "name": "B&H Photo",
         "logo": "images/logos/bh-photo.png"
       },
       "items": [
         {
-          "title": "Wireless Headphones",
-          "description": "Noise-cancelling over-ear headphones",
-          "price": 199,
-          "image": "images/showcases/showcase_2_item_1.jpg"
+          "title": "Intex Pure Spa 4-Person Inflatable Hot Tub",
+          "description": "Let your worries bubble away as you unwind in the total relaxation of the Intex PureSpa Plus Portable Inflatable Hot Tub. The PureSpa provides relaxation at the touch of a button for up to 4-people with its easy-to-use control panel that activates 140 high-powered bubble jets surrounding the interior of the spa for a refreshing massage. The heating system on this inflatable spa adjusts to fit your personal temperature preference, allowing for a stress-free spa experience. This particular PureSpa also features built-in LED lighting, headrests, and a built-in hard water treatment system to keep your spa time comfortable.",
+          "price": 699,
+          "image": "images/showcases/2A.jpg"
         },
         {
-          "title": "Tablet",
-          "description": "10-inch tablet with 64GB storage",
-          "price": 329,
-          "image": "images/showcases/showcase_2_item_2.jpg"
+          "title": "Neptune 55-inch Full Sun Outdoor Smart TV",
+          "description": "The Neptune Full Sun Outdoor Smart TV is an all-season solution for outdoor entertainment and living. This outdoor TV is all weather rated, maintenance-free and has an operating temperature range of -22°F to 122°F (-30°C to 50°C). With 4K resolution and an IPS panel, Neptune meets the full UHD specifications, providing exceptional color and video quality from any viewing angle. The Neptune Full Sun Outdoor Smart TV brings everyone’s favorite content and apps outdoors, creating a feature rich outdoor oasis. Whether you want an outdoor TV to enjoy poolside or on your backyard patio, quality outdoor entertainment is now a reality with Neptune.",
+          "price": 2999,
+          "image": "images/showcases/2B.png"
         },
         {
           "title": "Wireless Charger",
