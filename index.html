@@ -6,23 +6,20 @@
   <title>The Cost is Correct</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Capriola&family=D    let gameData = {};
-    let currentRound = 1;
-    let maxRounds = 4; // 3 single items + 1 showcase
-    let currentItem = null;
-    let currentShowcase = null;
-    let currentGalleryIndex = 0; // Track which item in showcase is being viewed
-    let guesses = [];
-    let maxGuesses = 2;
-    let gameOver = false;
-    let roundScores = [];
-    let totalScore = 0;
-    let roundHistory = [];:ital@0;1&family=Knewave&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Capriola&family=DM+Serif+Text:ital@0;1&family=Knewave&family=Monofett&family=Trocchi&display=swap" rel="stylesheet">
   <style>
-    body { font-family: Arial, sans-serif; text-align: center; padding: 2rem; background: url('background.jpg') repeat; }
+    body { font-family: Arial, sans-serif; text-align: center; padding: 2rem; background: url('background.png') repeat; }
     .game-container { display: flex; gap: 2rem; max-width: 1200px; margin: auto; align-items: flex-start; }
     .game { background: white; padding: 2rem; border-radius: 12px; flex: 1; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
     .score-sidebar { background: white; padding: 1.5rem; border-radius: 12px; width: 250px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+    
+    .round-header h2 { 
+      font-family: 'Kneawave', cursive; 
+      font-size: 5rem; 
+      color: #ffffff; 
+      margin: 0 0 1rem 0; 
+      text-shadow: 4px 4px 2px rgba(0,0,0,0.6); 
+    }
             .score-sidebar h3 {
           margin-top: 0;
           margin-bottom: 1rem;
@@ -72,6 +69,12 @@
           align-items: center;
           justify-content: flex-start;
           margin: 1rem 0;
+        }
+
+        .guess-input-container.showcase-centered {
+          justify-content: center;
+          max-width: 400px;
+          margin: 1rem auto;
         }
 
         .guess-input-container input {
@@ -152,12 +155,13 @@
     .difference { margin-top: 0.5rem; font-size: 1.2rem; color: #666; }
     .guesses-remaining { margin-top: 0.5rem; color: #888; font-size: 0.9rem; }
     .round-header { background: #c71c1c; color: white; padding: 1rem; margin: -2rem -2rem 1rem -2rem; border-radius: 12px 12px 0 0; }
-    .round-header h2 { font-family: "Knewave", cursive; margin: 0.5rem 0; font-size: 2.5rem; }
+    .round-header h2 { font-family: "Capriola", sans-serif; margin: 0.5rem 0; font-size: 2.5rem; }
+    .game-subtitle { font-size: 0.9rem; margin: .5rem 5rem 1rem 5rem; color: #f0f0f0; font-weight: normal; line-height: 2; }
     .progress-container { margin: 1rem 0; display: flex; justify-content: center; }
     .progress-line { display: flex; align-items: center; gap: 1rem; }
     .progress-point { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem; transition: all 0.3s ease; }
     .progress-point.completed { background: #28a745; color: white; }
-    .progress-point.current { background: #ffc107; color: #000; transform: scale(1.2); }
+    .progress-point.current { background: #ffffff; color: #000; transform: scale(1.2); }
     .progress-point.upcoming { background: #6c757d; color: white; }
     .progress-connector { width: 60px; height: 4px; background: #dee2e6; border-radius: 2px; }
     .progress-connector.completed { background: #28a745; }
@@ -166,12 +170,13 @@
     .catalog-image img { width: auto; height: 350px; max-width: none; object-fit: contain; border-radius: 8px; box-shadow: 3px 3px 8px rgba(0,0,0,0.25); }
     .catalog-details { flex: 1; text-align: left; padding: 1rem 0; min-height: 350px; min-width: 300px; }
     .catalog-details h3 { margin-top: 0; margin-bottom: 0.3rem; font-size: 2rem; color: #333; font-family: 'Capriola', sans-serif; }
-    #showcaseTitle { margin-bottom: 0.3rem; }
+    #showcaseTitle { margin-top: 0; margin-bottom: 0.3rem; font-size: 2rem; color: #333; font-family: 'Capriola', sans-serif; }
     .catalog-details p { margin: 1rem 0 1.5rem 0; line-height: 1.5; color: #555; }
     .showcase-items { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin: 1rem 0; }
     .showcase-item { border: 1px solid #ddd; border-radius: 8px; padding: 1rem; }
     .showcase-item img { width: 100%; max-width: 120px; border-radius: 4px; }
     .showcase-gallery { display: flex; align-items: center; justify-content: center; gap: 1rem; margin: 1rem 0; }
+    .showcase-navigation { display: flex; align-items: center; justify-content: center; gap: 2rem; margin: 1rem 0; }
     .gallery-content { display: flex; align-items: flex-start; gap: 2rem; max-width: 600px; }
     .gallery-image { width: auto; height: 200px; max-width: 300px; object-fit: contain; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
     .gallery-info { text-align: left; flex: 1; padding: 1rem 0; }
@@ -180,7 +185,7 @@
     .gallery-nav { background: #007acc; color: white; border: none; padding: 0.5rem 1rem; border-radius: 50%; cursor: pointer; font-size: 1.2rem; }
     .gallery-nav:hover { background: #005a99; }
     .gallery-nav:disabled { background: #ccc; cursor: not-allowed; }
-    .gallery-counter { margin-top: 0.5rem; font-size: 0.9rem; color: #666; }
+    .gallery-counter { font-size: 0.9rem; color: #666; font-weight: bold; }
     .store-info { display: flex; align-items: center; justify-content: flex-start; gap: 0.5rem; margin: 0.2rem 0; }
     .store-logo { height: 24px; width: auto; max-width: 80px; object-fit: contain; }
     .store-name { font-size: 0.9rem; color: #666; }
@@ -193,6 +198,39 @@
     .score-poor { color: #ff4500; } /* Red orange for 300-499 */
     .score-bad { color: #dc143c; } /* Crimson for 100-299 */
     .score-terrible { color: #8b0000; } /* Dark red for 0-99 */
+    
+    .game-complete-container {
+      background: #f8f9fa;
+      border: 1px solid #dee2e6;
+      border-radius: 12px;
+      padding: 2rem;
+      margin: 2rem auto;
+      max-width: 500px;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .game-complete-container h3 {
+      margin-top: 0;
+      color: #28a745;
+      font-size: 1.8rem;
+    }
+    .final-score {
+      font-size: 1.3rem;
+      color: #495057;
+      margin: 1rem 0;
+    }
+    .final-grade {
+      font-size: 1.5rem;
+      color: #007acc;
+      margin: 1rem 0;
+      font-weight: bold;
+    }
+    .comeback-message {
+      color: #6c757d;
+      font-style: italic;
+      margin-top: 1.5rem;
+    }
+    
     .image-modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); }
     .modal-content { display: flex; justify-content: center; align-items: center; height: 100%; padding: 20px; }
     .modal-image { max-width: 90%; max-height: 90%; object-fit: contain; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.5); }
@@ -207,7 +245,8 @@
   <div class="game-container">
     <div class="game">
       <div class="round-header">
-        <h2>THE COST IS CORRECT!</h2>
+        <h2>THE COST IS CORRECT</h2>
+        <p class="game-subtitle">You get 2 chances to guess the retail price of items, receiving points based on how close you end up to the actual retail value. 3 rounds of single items followed by a Showcase. Don't bust or you'll get nothing!</p>
         <div class="progress-container">
           <div class="progress-line">
             <div class="progress-point current" id="point1">1</div>
@@ -247,31 +286,36 @@
     <!-- Showcase Display -->
     <div id="showcaseView" class="hidden">
       <h3 id="showcaseTitle">Showcase Showdown</h3>
-      <div class="store-info">
-        <img id="storeLogoShowcase" class="store-logo" src="" alt="Store">
-        <span id="storeNameShowcase" class="store-name">Store</span>
+      
+      <div class="showcase-navigation">
+        <button class="gallery-nav" id="prevBtn" onclick="navigateGallery(-1)">‹</button>
+        <div class="gallery-counter">
+          <span id="galleryCounter">1 of 3</span>
+        </div>
+        <button class="gallery-nav" id="nextBtn" onclick="navigateGallery(1)">›</button>
       </div>
-      <div class="guess-input-container">
+      
+      <div class="catalog-layout">
+        <div class="catalog-image">
+          <img id="galleryImage" class="clickable-image" src="" alt="Showcase Item" onclick="openImageModal(this.src)">
+        </div>
+        <div class="catalog-details">
+          <h3 id="galleryTitle">Item Title</h3>
+          <div class="store-info">
+            <img id="galleryStoreLogo" class="store-logo" src="" alt="Store">
+            <span id="galleryStoreName" class="store-name">Store</span>
+          </div>
+          <p id="galleryDescription">Item description</p>
+        </div>
+      </div>
+      
+      <p><strong>Guess the total price of all items!</strong></p>
+      <div class="guess-input-container showcase-centered">
         <div class="catalog-price-input">
           <input type="number" id="guessInputShowcase" placeholder="0" />
         </div>
         <button onclick="makeGuess()" id="guessButtonShowcase">Submit</button>
       </div>
-      <div class="showcase-gallery">
-        <button class="gallery-nav" id="prevBtn" onclick="navigateGallery(-1)">‹</button>
-        <div class="gallery-content">
-          <img id="galleryImage" class="gallery-image clickable-image" src="" alt="Showcase Item" onclick="openImageModal(this.src)">
-          <div class="gallery-info">
-            <h4 id="galleryTitle">Item Title</h4>
-            <p id="galleryDescription">Item description</p>
-          </div>
-        </div>
-        <button class="gallery-nav" id="nextBtn" onclick="navigateGallery(1)">›</button>
-      </div>
-      <div class="gallery-counter">
-        <span id="galleryCounter">1 of 3</span>
-      </div>
-      <p><strong>Guess the total price of all items!</strong></p>
     </div>
 
     <div class="feedback" id="feedback"></div>
@@ -328,6 +372,18 @@
       try {
         const response = await fetch('items.json');
         gameData = await response.json();
+        
+        // Auto-calculate showcase total prices from individual item prices
+        if (gameData.showcases) {
+          gameData.showcases.forEach(showcase => {
+            if (showcase.items && showcase.items.length > 0) {
+              showcase.total_price = showcase.items.reduce((total, item) => {
+                return total + (item.price || 0);
+              }, 0);
+            }
+          });
+        }
+        
         setupDailyChallenge();
       } catch (error) {
         console.error('Could not load items:', error);
@@ -356,14 +412,27 @@
       const today = new Date();
       const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / 86400000);
       
-      // Pick 3 single items and 1 showcase for today
+      // Filter out items without proper data (empty title, no price, or no image)
+      const validSingleItems = gameData.single_items.filter(item => 
+        item.title && item.title.trim() !== '' && 
+        item.price > 0 && 
+        item.image && item.image.trim() !== ''
+      );
+      
+      const validShowcases = gameData.showcases.filter(showcase => 
+        showcase.title && showcase.title.trim() !== '' && 
+        showcase.total_price > 0 &&
+        showcase.items && showcase.items.length > 0
+      );
+      
+      // Pick 3 single items and 1 showcase for today from valid items only
       const singleItemsToday = [];
       for (let i = 0; i < 3; i++) {
-        const itemIndex = (dayOfYear + i) % gameData.single_items.length;
-        singleItemsToday.push(gameData.single_items[itemIndex]);
+        const itemIndex = (dayOfYear + i) % validSingleItems.length;
+        singleItemsToday.push(validSingleItems[itemIndex]);
       }
-      const showcaseIndex = dayOfYear % gameData.showcases.length;
-      const showcaseToday = gameData.showcases[showcaseIndex];
+      const showcaseIndex = dayOfYear % validShowcases.length;
+      const showcaseToday = validShowcases[showcaseIndex];
       
       gameData.todaysGame = {
         rounds: [...singleItemsToday, showcaseToday]
@@ -512,8 +581,20 @@
       
       // Display store information
       if (currentItem.store) {
-        document.getElementById('storeLogoSingle').src = currentItem.store.logo;
-        document.getElementById('storeNameSingle').textContent = currentItem.store.name;
+        // Handle both string store names and store objects
+        let storeName, storeLogo;
+        if (typeof currentItem.store === 'string') {
+          // If store is a string, look up the logo from the stores mapping
+          storeName = currentItem.store;
+          storeLogo = gameData.stores[currentItem.store] || 'images/logos/placeholder.png';
+        } else {
+          // If store is an object, use its properties directly
+          storeName = currentItem.store.name;
+          storeLogo = currentItem.store.logo;
+        }
+        
+        document.getElementById('storeLogoSingle').src = storeLogo;
+        document.getElementById('storeNameSingle').textContent = storeName;
       }
     }
 
@@ -522,12 +603,6 @@
       document.getElementById('showcaseView').classList.remove('hidden');
       
       document.getElementById('showcaseTitle').textContent = currentShowcase.title;
-      
-      // Display store information for showcase
-      if (currentShowcase.store) {
-        document.getElementById('storeLogoShowcase').src = currentShowcase.store.logo;
-        document.getElementById('storeNameShowcase').textContent = currentShowcase.store.name;
-      }
       
       // Reset gallery to first item
       currentGalleryIndex = 0;
@@ -550,6 +625,24 @@
       document.getElementById('galleryImage').src = currentGalleryItem.image;
       document.getElementById('galleryTitle').textContent = currentGalleryItem.title;
       document.getElementById('galleryDescription').textContent = currentGalleryItem.description;
+      
+      // Update store info for the current item
+      if (currentGalleryItem.store) {
+        // Handle both string store names and store objects
+        let storeName, storeLogo;
+        if (typeof currentGalleryItem.store === 'string') {
+          // If store is a string, look up the logo from the stores mapping
+          storeName = currentGalleryItem.store;
+          storeLogo = gameData.stores[currentGalleryItem.store] || 'images/logos/placeholder.png';
+        } else {
+          // If store is an object, use its properties directly
+          storeName = currentGalleryItem.store.name;
+          storeLogo = currentGalleryItem.store.logo;
+        }
+        
+        document.getElementById('galleryStoreLogo').src = storeLogo;
+        document.getElementById('galleryStoreName').textContent = storeName;
+      }
       
       // Update counter
       document.getElementById('galleryCounter').textContent = 
@@ -652,10 +745,34 @@
         return;
       }
 
+      // Check for exact match first
+      if (guess === actualPrice) {
+        document.getElementById('feedback').textContent = `Wow! You were right on the money!`;
+        document.getElementById('guessesRemaining').textContent = '';
+        endRound(true, actualPrice);
+        return;
+      }
+
       const remaining = maxGuesses - guesses.length;
       
       if (guesses.length < maxGuesses) {
-        document.getElementById('feedback').textContent = `You guessed $${guess}. You are UNDER. Try again!`;
+        // Calculate how far off the guess is as a percentage
+        const percentageOff = Math.abs(actualPrice - guess) / actualPrice;
+        let underMessage = '';
+        
+        if (percentageOff >= 0.5) {
+          underMessage = 'WAY UNDER';
+        } else if (percentageOff >= 0.35) {
+          underMessage = 'WELL UNDER';
+        } else if (percentageOff >= 0.25) {
+          underMessage = 'UNDER';
+        } else if (percentageOff >= 0.15) {
+          underMessage = 'A BIT UNDER';
+        } else {
+          underMessage = 'SLIGHTLY UNDER';
+        }
+        
+        document.getElementById('feedback').textContent = `You guessed $${guess}. You are ${underMessage}. Try again!`;
         document.getElementById('guessesRemaining').textContent = `Guesses remaining: ${remaining}`;
       } else {
         document.getElementById('guessesRemaining').textContent = '';
@@ -684,7 +801,7 @@
         let resultText = `<strong>Actual retail price was $${actualPrice}.</strong><br>`;
         
         if (diff === 0) {
-          resultText += `Perfect guess! 🎉`;
+          resultText += `Wow! You were right on the money with that one! 🎉`;
         } else {
           const percentageOff = (diff / actualPrice * 100).toFixed(1);
           resultText += `You were ${percentageOff}% under.`;
@@ -776,10 +893,12 @@
       else if (totalScore >= 1500) grade = 'D';   // 30%+
       
       document.getElementById('result').innerHTML = `
-        <h3>🎉 Game Complete!</h3>
-        <p><strong>Final Score: ${totalScore.toLocaleString()} / 5,000 points</strong></p>
-        <p><strong>Grade: ${grade}</strong></p>
-        <p>Come back tomorrow for a new challenge!</p>
+        <div class="game-complete-container">
+          <h3>🎉 Game Complete!</h3>
+          <p class="final-score"><strong>Final Score: ${totalScore.toLocaleString()} / 5,000 points</strong></p>
+          <p class="final-grade">Grade: ${grade}</p>
+          <p class="comeback-message">Come back tomorrow for a new challenge!</p>
+        </div>
       `;
     }
   </script>
