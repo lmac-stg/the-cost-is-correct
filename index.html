@@ -6,7 +6,7 @@
   <title>The Cost is Correct</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Capriola&family=DM+Serif+Text:ital@0;1&family=Knewave&family=Monofett&family=Monoton&family=Trocchi&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Capriola&family=DM+Serif+Text:ital@0;1&family=Knewave&family=Lexend:wght@100..900&family=Monofett&family=Monoton&family=Trocchi&display=swap" rel="stylesheet">
   <style>
     body { font-family: Arial, sans-serif; text-align: center; padding: 2rem; background: url('background.png') repeat; }
     .game-container { display: flex; gap: 2rem; max-width: 1200px; margin: auto; align-items: flex-start; }
@@ -149,11 +149,12 @@
     .guesses-remaining { margin-top: 0.5rem; color: #888; font-size: 0.9rem; }
     .round-header { background: #8d8d8d; color: rgb(255, 255, 255); padding: 0.75rem; margin: -2rem -2rem 1rem -2rem; border-radius: 27px 27px 0 0; }
     .round-header h2 { 
-      font-family: "Monoton", cursive; 
+      font-family: "Lexend", sans-serif; 
       margin: 0.1rem 0; 
       font-size: 3.5rem; 
       color: #ffffff; 
-      text-shadow: 4px 4px .25px rgba(0,0,0,0.8); 
+      text-shadow: 4px 4px .25px rgba(0,0,0,0.8);
+      font-weight: 700;
     }
     .game-subtitle { font-size: 0.9rem; margin: .5rem 5rem 1rem 5rem; color: #f0f0f0; font-weight: normal; line-height: 2; }
     .progress-container { margin: 1rem 0; display: flex; justify-content: center; }
@@ -168,7 +169,9 @@
     .catalog-image { flex: 0 0 auto; }
     .catalog-image img { width: auto; height: 350px; max-width: none; object-fit: contain; border-radius: 8px; box-shadow: 3px 3px 8px rgba(0,0,0,0.25); }
     .catalog-details { flex: 1; text-align: left; padding: 1rem 0; min-height: 350px; min-width: 300px; }
-    .catalog-details h3 { margin-top: 0; margin-bottom: 0.3rem; font-size: 2rem; color: #333; font-family: 'Capriola', sans-serif; }
+    .product-title-container { margin-bottom: 0.5rem; }
+    .catalog-details h3 { margin-top: 0; margin-bottom: 0.1rem; font-size: 2rem; color: #333; font-family: 'Capriola', sans-serif; font-weight: bold; }
+    .catalog-details h4 { margin-top: 0; margin-bottom: 0.3rem; font-size: 1.5rem; color: #555; font-family: 'Capriola', sans-serif; font-weight: normal; }
     #showcaseTitle { margin-top: 0; margin-bottom: 0.3rem; font-size: 2rem; color: #333; font-family: 'Capriola', sans-serif; }
     .catalog-details p { margin: 1rem 0 1.5rem 0; line-height: 1.5; color: #555; }
     .showcase-items { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin: 1rem 0; }
@@ -319,14 +322,17 @@
           <img id="itemImage" class="clickable-image" src="" alt="Item" onclick="openImageModal(this.src)">
         </div>
         <div class="catalog-details">
-          <h3 id="itemTitle">Loading...</h3>
+          <div class="product-title-container">
+            <h3 id="itemBrand">Loading...</h3>
+            <h4 id="itemTitle">Loading...</h4>
+          </div>
           <div class="store-info">
             <img id="storeLogoSingle" class="store-logo" src="" alt="Store">
             <span id="storeNameSingle" class="store-name">Store</span>
           </div>
           <div class="guess-input-container">
             <div class="catalog-price-input">
-              <input type="number" id="guessInput" placeholder="0" />
+              <input type="number" id="guessInput" placeholder="0.00" />
             </div>
             <button onclick="makeGuess()" id="guessButton">Submit</button>
           </div>
@@ -352,7 +358,10 @@
           <img id="galleryImage" class="clickable-image" src="" alt="Showcase Item" onclick="openImageModal(this.src)">
         </div>
         <div class="catalog-details">
-          <h3 id="galleryTitle">Item Title</h3>
+          <div class="product-title-container">
+            <h3 id="galleryBrand">Item Brand</h3>
+            <h4 id="galleryTitle">Item Title</h4>
+          </div>
           <div class="store-info">
             <img id="galleryStoreLogo" class="store-logo" src="" alt="Store">
             <span id="galleryStoreName" class="store-name">Store</span>
@@ -364,7 +373,7 @@
       <p><strong>Guess the total price of all items!</strong></p>
       <div class="guess-input-container showcase-centered">
         <div class="catalog-price-input">
-          <input type="number" id="guessInputShowcase" placeholder="0" />
+          <input type="number" id="guessInputShowcase" placeholder="0.00" />
         </div>
         <button onclick="makeGuess()" id="guessButtonShowcase">Submit</button>
       </div>
@@ -425,6 +434,11 @@
         const response = await fetch('items.json');
         gameData = await response.json();
         
+        // Debug: Check what we actually loaded
+        console.log('Loaded gameData:', gameData);
+        console.log('First single item from JSON:', gameData.single_items[0]);
+        console.log('First item keys:', Object.keys(gameData.single_items[0]));
+        
         // Auto-calculate showcase total prices from individual item prices
         if (gameData.showcases) {
           gameData.showcases.forEach(showcase => {
@@ -478,9 +492,9 @@
           document.querySelector('.game-subtitle').textContent;
       }
       
-      // Filter out items without proper data (empty title, no price, or no image)
+      // Filter out items without proper data (empty title/brand, no price, or no image)
       const validSingleItems = gameData.single_items.filter(item => 
-        item.title && item.title.trim() !== '' && 
+        ((item.brand && item.brand.trim() !== '') || (item.title && item.title.trim() !== '')) && 
         item.price > 0 && 
         item.image && item.image.trim() !== ''
       );
@@ -661,7 +675,43 @@
       document.getElementById('showcaseView').classList.add('hidden');
       
       document.getElementById('itemImage').src = currentItem.image;
-      document.getElementById('itemTitle').textContent = currentItem.title;
+      
+      // Handle both old format (title only) and new format (brand + title)
+      console.log('Current item:', currentItem); // Debug log
+      console.log('Brand field value:', currentItem.brand); // Debug - exact brand value
+      console.log('Title field value:', currentItem.title); // Debug - exact title value
+      console.log('All item keys:', Object.keys(currentItem)); // Debug - all properties
+      
+      // Check if this item has the new format (both brand and title fields)
+      const hasBrand = currentItem.brand && currentItem.brand.trim() !== '';
+      const hasTitle = currentItem.title && currentItem.title.trim() !== '';
+      
+      console.log('Has brand:', hasBrand, 'Has title:', hasTitle); // Debug
+      
+      if (hasBrand && hasTitle) {
+        // New format with separate brand and title
+        console.log('Using new format - Brand:', currentItem.brand, 'Title:', currentItem.title); // Debug
+        document.getElementById('itemBrand').textContent = currentItem.brand.trim();
+        document.getElementById('itemTitle').textContent = currentItem.title.trim();
+      } else if (hasTitle) {
+        // Legacy format - title contains full product name, split it
+        console.log('Using legacy format for:', currentItem.title); // Debug
+        const fullTitle = currentItem.title.trim();
+        const parts = fullTitle.split(' ');
+        if (parts.length >= 2) {
+          document.getElementById('itemBrand').textContent = parts[0];
+          document.getElementById('itemTitle').textContent = parts.slice(1).join(' ');
+        } else {
+          document.getElementById('itemBrand').textContent = fullTitle;
+          document.getElementById('itemTitle').textContent = '';
+        }
+      } else {
+        // Fallback
+        console.log('Using fallback - no valid data found');
+        document.getElementById('itemBrand').textContent = 'Unknown Brand';
+        document.getElementById('itemTitle').textContent = 'Unknown Item';
+      }
+      
       document.getElementById('itemDescription').textContent = currentItem.description;
       
       // Display store information
@@ -708,7 +758,29 @@
       const currentGalleryItem = currentShowcase.items[currentGalleryIndex];
       
       document.getElementById('galleryImage').src = currentGalleryItem.image;
-      document.getElementById('galleryTitle').textContent = currentGalleryItem.title;
+      
+      // Handle both old format (title only) and new format (brand + title)
+      if (currentGalleryItem.brand && currentGalleryItem.brand.trim() !== '' && currentGalleryItem.title && currentGalleryItem.title.trim() !== '') {
+        // New format with separate brand and title
+        document.getElementById('galleryBrand').textContent = currentGalleryItem.brand.trim();
+        document.getElementById('galleryTitle').textContent = currentGalleryItem.title.trim();
+      } else if (currentGalleryItem.title && currentGalleryItem.title.trim() !== '') {
+        // Legacy format - try to split title into brand and product
+        const fullTitle = currentGalleryItem.title.trim();
+        const parts = fullTitle.split(' ');
+        if (parts.length >= 2) {
+          document.getElementById('galleryBrand').textContent = parts[0];
+          document.getElementById('galleryTitle').textContent = parts.slice(1).join(' ');
+        } else {
+          document.getElementById('galleryBrand').textContent = fullTitle;
+          document.getElementById('galleryTitle').textContent = '';
+        }
+      } else {
+        // Fallback
+        document.getElementById('galleryBrand').textContent = 'Unknown Brand';
+        document.getElementById('galleryTitle').textContent = 'Unknown Item';
+      }
+      
       document.getElementById('galleryDescription').textContent = currentGalleryItem.description;
       
       // Update store info for the current item
@@ -977,14 +1049,46 @@
       else if (totalScore >= 2000) grade = 'C';   // 40%+
       else if (totalScore >= 1500) grade = 'D';   // 30%+
       
-      document.getElementById('result').innerHTML = `
-        <div class="game-complete-container">
-          <h3>🎉 Game Complete!</h3>
-          <p class="final-score"><strong>Final Score: ${totalScore.toLocaleString()} / 5,000 points</strong></p>
-          <p class="final-grade">Grade: ${grade}</p>
-          <p class="comeback-message">Come back tomorrow for a new challenge!</p>
+      // Use modal popup for game completion
+      const completionContent = `
+        <div style="text-align: center;">
+          <h3 style="color: #28a745; font-size: 1.8rem; margin-top: 0;">🎉 Game Complete!</h3>
+          <p style="font-size: 1.3rem; color: #495057; margin: 1rem 0;"><strong>Final Score: ${totalScore.toLocaleString()} / 5,000 points</strong></p>
+          <p style="font-size: 1.5rem; color: #007acc; margin: 1rem 0; font-weight: bold;">Grade: ${grade}</p>
+          <p style="color: #6c757d; font-style: italic; margin-top: 1.5rem;">Come back tomorrow for a new challenge!</p>
         </div>
       `;
+      
+      // Create modal backdrop
+      const backdrop = document.createElement('div');
+      backdrop.style.cssText = `
+        position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+        background: rgba(0,0,0,0.5); display: flex; justify-content: center; 
+        align-items: center; z-index: 1000;
+      `;
+      
+      // Create modal content
+      const modal = document.createElement('div');
+      modal.style.cssText = `
+        background: white; padding: 2rem; border-radius: 12px; 
+        max-width: 500px; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        font-family: Arial, sans-serif; line-height: 1.6; border: 3px solid #28a745;
+      `;
+      
+      modal.innerHTML = completionContent;
+      
+      // Add close button
+      const closeButton = document.createElement('button');
+      closeButton.textContent = 'Close';
+      closeButton.style.cssText = `
+        background: #28a745; color: white; border: none; padding: 0.8rem 1.5rem; 
+        border-radius: 8px; cursor: pointer; font-size: 1rem; margin-top: 1rem;
+      `;
+      closeButton.onclick = () => document.body.removeChild(backdrop);
+      
+      modal.appendChild(closeButton);
+      backdrop.appendChild(modal);
+      document.body.appendChild(backdrop);
     }
   </script>
 </body>

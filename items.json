@@ -34,7 +34,8 @@
   "single_items": [
     {
       "id": 1,
-      "title": "La Creuset Enameled Cast Iron Bread Oven",
+      "brand": "Le Creuset",
+      "title": "Enameled Cast Iron Bread Oven",
       "description": "Designed to reproduce the effects of brick-oven baking, this enameled cast-iron bread oven from Le Creuset absorbs and retains heat evenly. It also redistributes the steam released by the dough as it cooks. This yields loaves with moist and tender interiors, light crumbs and crisp browned crusts.",
       "price": 300,
       "image": "images/items/item_1.jpg",
@@ -42,7 +43,8 @@
     },
     {
       "id": 2,
-      "title": "Apple Homepod (2nd Gen)",
+      "brand": "Apple",
+      "title": "HomePod (2nd Gen)",
       "description": "The all-new HomePod delivers groundbreaking, premium sound, from clear, detailed highs to deep, rich bass. Advanced computational audio pushes acoustics further. Spatial Audio provides even more immersive sound.  Works seamlessly with all your Apple devices.  Connect and control your smart home, privately and securely.",
       "price": 299,
       "image": "images/items/item_2.jpg",
@@ -50,6 +52,7 @@
     },
     {
       "id": 3,
+      "brand": "IKEA",
       "title": "Stockholm Sideboard",
       "description": "The sideboard in walnut veneer and solid ash brings a warm, natural feeling to your room. The distinctive grain pattern in the walnut veneer gives each piece of furniture a unique character. Walnut is a naturally hardwearing material. The surface has been made even more durable by a protective coat of lacquer. Push openers give the sideboard a streamlined look with no handles or knobs needed. Inside the sideboard are two drawers and two adjustable shelves in walnut veneer and solid wood. The sideboard has adjustable feet so it stands evenly on uneven floors.",
       "price": 499,
