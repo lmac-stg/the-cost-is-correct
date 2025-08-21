@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>The Cost is Correct</title>
+  <title>GUESS THE RIGHT PRICE</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Capriola&family=DM+Serif+Text:ital@0;1&family=Knewave&family=Lexend:wght@100..900&family=Monofett&family=Monoton&family=Trocchi&display=swap" rel="stylesheet">
@@ -97,7 +97,7 @@
           gap: 0.5rem;
           align-items: center;
           justify-content: flex-start;
-          border: 2px dashed #dc3545;
+          border: 0px dashed #dc3545;
           background: rgb(245, 245, 245);
           padding: 0.6rem 0.8rem;
           border-radius: 12px;
@@ -161,8 +161,8 @@
     .progress-line { display: flex; align-items: center; gap: 1rem; }
     .progress-point { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem; transition: all 0.3s ease; }
     .progress-point.completed { background: #28a745; color: white; }
-    .progress-point.current { background: #ffffff; color: #000; transform: scale(1.2); }
-    .progress-point.upcoming { background: #6c757d; color: white; }
+    .progress-point.current { background: #ffffff; color: #000; transform: scale(1.2); border: 2px solid #000000; box-shadow: 0 0 0 0px rgba(255, 255, 255, 0.3); }
+    .progress-point.upcoming { background: #2b2c2c; color: white; }
     .progress-connector { width: 60px; height: 4px; background: #dee2e6; border-radius: 2px; }
     .progress-connector.completed { background: #28a745; }
     .catalog-layout { display: flex; align-items: flex-start; gap: 2rem; margin: 2rem 0; width: fit-content; min-width: 600px; max-width: 100%; }
@@ -191,7 +191,10 @@
     .store-info { display: flex; align-items: center; justify-content: flex-start; gap: 0.5rem; margin: 0.2rem 0; }
     .store-logo { height: 24px; width: auto; max-width: 80px; object-fit: contain; }
     .store-name { font-size: 0.9rem; color: #666; }
-    #itemDescription, #galleryDescription { font-family: "DM Serif Text", serif; font-style: italic; }
+    #itemDescription, #galleryDescription { font-family: "DM Serif Text", serif; font-style: italic; max-height: 120px; overflow: hidden; transition: max-height 0.3s ease; cursor: pointer; position: relative; }
+    #itemDescription:hover, #galleryDescription:hover { max-height: none; overflow: auto; }
+    #itemDescription::after, #galleryDescription::after { content: ""; position: absolute; bottom: 0; left: 0; right: 0; height: 20px; background: linear-gradient(transparent, rgba(255,255,255,0.9)); pointer-events: none; }
+    #itemDescription:hover::after, #galleryDescription:hover::after { display: none; }
     .score-text { font-weight: bold; font-size: 1.1rem; }
     .score-excellent { color: #006400; } /* Dark green for 900-1000+ */
     .score-great { color: #228b22; } /* Green for 800-899 */
@@ -286,7 +289,7 @@
   <div class="game-container">
     <div class="game">
       <div class="round-header">
-        <h2>THE COST IS CORRECT</h2>
+        <h2>GUESS THE RIGHT PRICE</h2>
         <p class="game-subtitle">You get 2 chances to guess the retail price of items, receiving points based on how close you end up to the actual retail value. 3 rounds of single items followed by a Showcase. Don't bust or you'll get nothing!</p>
         <div class="progress-container">
           <div class="progress-line">
@@ -431,7 +434,9 @@
     // Load items and set up daily challenge
     async function loadItems() {
       try {
-        const response = await fetch('items.json');
+        // Add cache-busting parameter to ensure fresh data
+        const cacheBuster = new Date().getTime();
+        const response = await fetch(`items.json?v=${cacheBuster}`);
         gameData = await response.json();
         
         // Debug: Check what we actually loaded
