@@ -13,6 +13,17 @@
     .game { background: white; padding: 2rem; border-radius: 30px; flex: 1; box-shadow: 14px 14px .25px rgba(0,0,0,0.5); border: 3px solid #000000; }
     .score-sidebar { background: white; padding: 1.5rem; border-radius: 12px; width: 250px; box-shadow: 14px 14px 1px rgba(0,0,0,0.5); border: 3px solid #000000; }
     
+    /* Game Instructions Box - inside score sidebar */
+    .game-instructions { 
+      background: #f8f9fa; 
+      padding: 1rem; 
+      border-radius: 8px; 
+      margin-top: 1.5rem; 
+      border: 1px solid #dee2e6;
+      border-top: 3px solid #007acc;
+    }
+    .game-instructions h3 { margin-top: 0; margin-bottom: 0.75rem; color: #333; font-size: 1rem; }
+    
             .score-sidebar h3 {
           margin-top: 0;
           margin-bottom: 1rem;
@@ -147,7 +158,7 @@
     .feedback { margin-top: 1rem; font-weight: bold; }
     .difference { margin-top: 0.5rem; font-size: 1.2rem; color: #666; }
     .guesses-remaining { margin-top: 0.5rem; color: #888; font-size: 0.9rem; }
-    .round-header { background: #8d8d8d; color: rgb(255, 255, 255); padding: 0.75rem; margin: -2rem -2rem 1rem -2rem; border-radius: 27px 27px 0 0; }
+    .round-header { background: #707070; color: rgb(255, 255, 255); padding: 0.2rem 2rem; margin: -2rem -2rem 0rem -2rem; border-radius: 27px 27px 0 0; }
     .round-header h2 { 
       font-family: "Lexend", sans-serif; 
       margin: 0.1rem 0; 
@@ -156,7 +167,7 @@
       text-shadow: 4px 4px .25px rgba(0,0,0,0.8);
       font-weight: 700;
     }
-    .game-subtitle { font-size: 0.9rem; margin: .5rem 5rem 1rem 5rem; color: #f0f0f0; font-weight: normal; line-height: 2; }
+    .game-subtitle { font-size: 0.9rem; margin: 0; color: #555; font-weight: normal; line-height: 1.6; }
     .progress-container { margin: 1rem 0; display: flex; justify-content: center; }
     .progress-line { display: flex; align-items: center; gap: 1rem; }
     .progress-point { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem; transition: all 0.3s ease; }
@@ -283,6 +294,214 @@
     .clickable-image { cursor: pointer; transition: opacity 0.2s ease; }
     .clickable-image:hover { opacity: 0.9; }
     .hidden { display: none; }
+    
+    /* Mobile Responsive Design */
+    @media (max-width: 768px) {
+      body { 
+        padding: 1rem; 
+        background-size: auto;
+      }
+      
+      /* Stack layout vertically on mobile */
+      .game-container { 
+        flex-direction: column; 
+        gap: 1rem; 
+      }
+      
+      /* Make game area full width */
+      .game { 
+        padding: 1.5rem; 
+        border-radius: 20px; 
+        box-shadow: 8px 8px 0.25px rgba(0,0,0,0.5); 
+      }
+      
+      /* Round header mobile adjustments */
+      .round-header { 
+        margin: -1.5rem -1.5rem 0rem -1.5rem; 
+        padding: 0.2rem 1.5rem; 
+        border-radius: 17px 17px 0 0; 
+      }
+      
+      /* Mobile title sizing - shrink instead of wrap */
+      .round-header h2 { 
+        font-size: 2.2rem; 
+        white-space: nowrap; 
+        overflow: hidden; 
+        text-overflow: ellipsis; 
+      }
+      
+      /* Stack sidebar below game on mobile */
+      .score-sidebar { 
+        width: 100%; 
+        order: 2; 
+        padding: 1rem; 
+        box-shadow: 8px 8px 1px rgba(0,0,0,0.5); 
+      }
+      
+      /* Stack catalog layout vertically */
+      .catalog-layout { 
+        flex-direction: column; 
+        gap: 1rem; 
+        margin: 1rem 0; 
+        min-width: unset; 
+        width: 100%; 
+        align-items: center; 
+      }
+      
+      /* Make images responsive */
+      .catalog-image { 
+        flex: none; 
+        width: 100%; 
+        text-align: center; 
+      }
+      
+      .catalog-image img { 
+        width: 100%; 
+        height: auto; 
+        max-width: 300px; 
+        max-height: 300px; 
+        object-fit: contain; 
+      }
+      
+      /* Full width details on mobile */
+      .catalog-details { 
+        min-width: unset; 
+        min-height: unset; 
+        width: 100%; 
+        text-align: center; 
+        padding: 0.5rem 0; 
+      }
+      
+      /* Smaller fonts on mobile */
+      .catalog-details h3 { 
+        font-size: 1.5rem; 
+      }
+      
+      .catalog-details h4 { 
+        font-size: 1.2rem; 
+      }
+      
+      /* Mobile-friendly input */
+      .guess-input-container { 
+        flex-direction: column; 
+        gap: 1rem; 
+        align-items: center; 
+      }
+      
+      .catalog-price-input { 
+        width: 200px; 
+      }
+      
+      .catalog-price-input input { 
+        font-size: 1.2rem; 
+        padding: 0.8rem; 
+      }
+      
+      /* Larger buttons for touch */
+      button { 
+        min-height: 44px; 
+        font-size: 1rem; 
+        padding: 0.8rem 1.5rem; 
+      }
+      
+      /* Progress indicator adjustments */
+      .progress-point { 
+        width: 35px; 
+        height: 35px; 
+        font-size: 0.8rem; 
+      }
+      
+      .progress-connector { 
+        width: 40px; 
+      }
+      
+      /* Gallery navigation for showcases */
+      .gallery-nav { 
+        min-width: 50px; 
+        min-height: 50px; 
+        font-size: 1.5rem; 
+      }
+      
+      /* Store info adjustments */
+      .store-info { 
+        justify-content: center; 
+      }
+      
+      .store-logo { 
+        width: 35px; 
+        height: 35px; 
+      }
+      
+      /* Description hover to tap for mobile */
+      #itemDescription:hover::after, #galleryDescription:hover::after { 
+        display: block; 
+      }
+      
+      #itemDescription, #galleryDescription { 
+        cursor: default; 
+      }
+      
+      /* Preview navigation mobile adjustments */
+      .preview-nav-buttons { 
+        gap: 0.3rem; 
+      }
+      
+      .preview-nav-btn { 
+        padding: 0.5rem 0.6rem; 
+        font-size: 0.8rem; 
+      }
+    }
+    
+    /* Small mobile phones */
+    @media (max-width: 480px) {
+      body { 
+        padding: 0.5rem; 
+      }
+      
+      .game { 
+        padding: 1rem; 
+        border-radius: 15px; 
+      }
+      
+      /* Round header small mobile adjustments */
+      .round-header { 
+        margin: -1rem -1rem 0rem -1rem; 
+        padding: 0.2rem 1rem; 
+        border-radius: 12px 12px 0 0; 
+      }
+      
+      /* Even smaller title for small mobile */
+      .round-header h2 { 
+        font-size: 1.8rem; 
+      }
+      
+      .catalog-details h3 { 
+        font-size: 1.3rem; 
+      }
+      
+      .catalog-details h4 { 
+        font-size: 1.1rem; 
+      }
+      
+      .catalog-image img { 
+        max-width: 250px; 
+        max-height: 250px; 
+      }
+      
+      .catalog-price-input { 
+        width: 180px; 
+      }
+      
+      .progress-point { 
+        width: 30px; 
+        height: 30px; 
+        font-size: 0.7rem; 
+      }
+      
+      .progress-connector { 
+        width: 30px; 
+      }
+    }
   </style>
 </head>
 <body>
@@ -290,7 +509,6 @@
     <div class="game">
       <div class="round-header">
         <h2>GUESS THE RIGHT PRICE</h2>
-        <p class="game-subtitle">You get 2 chances to guess the retail price of items, receiving points based on how close you end up to the actual retail value. 3 rounds of single items followed by a Showcase. Don't bust or you'll get nothing!</p>
         <div class="progress-container">
           <div class="progress-line">
             <div class="progress-point current" id="point1">1</div>
@@ -405,6 +623,12 @@
       <div class="score-history">
         <div style="font-weight: bold; margin-bottom: 0.5rem;">Round History</div>
         <div id="scoreHistoryList"></div>
+      </div>
+      
+      <!-- Game Instructions Box -->
+      <div class="game-instructions">
+        <h3>📋 How to Play</h3>
+        <p class="game-subtitle">You get 2 chances to guess the retail price of items, receiving points based on how close you end up to the actual retail value. 3 rounds of single items followed by a Showcase. Don't bust or you'll get nothing!</p>
       </div>
     </div>
   </div>
