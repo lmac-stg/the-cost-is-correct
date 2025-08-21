@@ -6,7 +6,12 @@
   <title>GUESS THE RIGHT PRICE</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Capriola&family=DM+Serif+Text:ital@0;1&family=Knewave&family=Lexend:wght@100..900&family=Monofett&family=Monoton&family=Trocchi&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Koh+Santepheap:wght@100;300;400;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Capriola&family=DM+Serif+Text:ital@0;1&family=Gabarito:wght@400..900&family=Knewave&family=Lexend:wght@100..900&family=Monofett&family=Monoton&family=Trocchi&display=swap" rel="stylesheet">
+  
+  <!-- Firebase SDK - TEMPORARILY DISABLED -->
+  <!-- <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script> -->
   <style>
     body { font-family: Arial, sans-serif; text-align: center; padding: 2rem; background: url('background.png') repeat; }
     .game-container { display: flex; gap: 2rem; max-width: 1200px; margin: auto; align-items: flex-start; }
@@ -178,12 +183,12 @@
     .progress-connector.completed { background: #28a745; }
     .catalog-layout { display: flex; align-items: flex-start; gap: 2rem; margin: 2rem 0; width: fit-content; min-width: 600px; max-width: 100%; }
     .catalog-image { flex: 0 0 auto; }
-    .catalog-image img { width: auto; height: 350px; max-width: none; object-fit: contain; border-radius: 8px; box-shadow: 3px 3px 8px rgba(0,0,0,0.25); }
-    .catalog-details { flex: 1; text-align: left; padding: 1rem 0; min-height: 350px; min-width: 300px; }
-    .product-title-container { margin-bottom: 0.5rem; }
-    .catalog-details h3 { margin-top: 0; margin-bottom: 0.1rem; font-size: 2rem; color: #333; font-family: 'Capriola', sans-serif; font-weight: bold; }
-    .catalog-details h4 { margin-top: 0; margin-bottom: 0.3rem; font-size: 1.5rem; color: #555; font-family: 'Capriola', sans-serif; font-weight: normal; }
-    #showcaseTitle { margin-top: 0; margin-bottom: 0.3rem; font-size: 2rem; color: #333; font-family: 'Capriola', sans-serif; }
+    .catalog-image img { width: auto; height: 350px; max-width: 400px; object-fit: contain; border-radius: 8px; box-shadow: 3px 3px 8px rgba(0,0,0,0.25); }
+    .catalog-details { flex: 1; text-align: left; padding: 0rem 0; min-height: 350px; min-width: 300px; }
+    .product-title-container { margin-bottom: 0.6rem; }
+    .catalog-details h3 { margin-top: 0rem; margin-bottom: 0.7rem; font-size: 2.5rem; color: #333; font-family: 'Gabarito', sans-serif; font-weight: bold; }
+    .catalog-details h4 { margin-top: -0.5rem; margin-bottom: 0.3rem; font-size: 1.5rem; color: #555; font-family: 'Gabarito', sans-serif; font-weight: normal; }
+    #showcaseTitle { margin-top: 1.5rem; margin-bottom: 0.7rem; font-size: 2.5rem; color: #333; font-family: 'Gabarito', sans-serif; font-weight: bold; }
     .catalog-details p { margin: 1rem 0 1.5rem 0; line-height: 1.5; color: #555; }
     .showcase-items { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin: 1rem 0; }
     .showcase-item { border: 1px solid #ddd; border-radius: 8px; padding: 1rem; }
@@ -202,7 +207,7 @@
     .store-info { display: flex; align-items: center; justify-content: flex-start; gap: 0.5rem; margin: 0.2rem 0; }
     .store-logo { height: 24px; width: auto; max-width: 80px; object-fit: contain; }
     .store-name { font-size: 0.9rem; color: #666; }
-    #itemDescription, #galleryDescription { font-family: "DM Serif Text", serif; font-style: italic; max-height: 120px; overflow: hidden; transition: max-height 0.3s ease; cursor: pointer; position: relative; }
+    #itemDescription, #galleryDescription { font-family: 'Koh Santepheap', serif; font-weight: 400; font-size: 0.9rem; font-style: normal; max-height: 120px; overflow: hidden; transition: max-height 0.3s ease; cursor: pointer; position: relative; }
     #itemDescription:hover, #galleryDescription:hover { max-height: none; overflow: auto; }
     #itemDescription::after, #galleryDescription::after { content: ""; position: absolute; bottom: 0; left: 0; right: 0; height: 20px; background: linear-gradient(transparent, rgba(255,255,255,0.9)); pointer-events: none; }
     #itemDescription:hover::after, #galleryDescription:hover::after { display: none; }
@@ -653,6 +658,58 @@
     let gameOver = false;
     let totalScore = 0;
     let roundScores = [];
+
+    // Firebase Configuration - TEMPORARILY DISABLED FOR TESTING
+    const firebaseConfig = {
+      // apiKey: "AIzaSyAtu2q3L9Z3HrFidfUvPwnTwqEP8il1r2o",
+      // authDomain: "the-cost-is-correct.firebaseapp.com",
+      // projectId: "the-cost-is-correct",
+      // storageBucket: "the-cost-is-correct.firebasestorage.app",
+      // messagingSenderId: "853113000023",
+      // appId: "1:853113000023:web:6c508d56412993f8bd9312"
+    };
+
+    // Initialize Firebase (only if config is provided)
+    let db = null;
+    if (firebaseConfig.apiKey) {
+      firebase.initializeApp(firebaseConfig);
+      db = firebase.firestore();
+    }
+
+    // Daily Average Functions
+    async function submitScoreToDatabase(score) {
+      if (!db) {
+        console.log('Firebase not configured - score not submitted');
+        return null;
+      }
+      
+      try {
+        const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD format
+        
+        // Submit the score
+        await db.collection('daily_scores').add({
+          score: score,
+          date: today,
+          timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        });
+
+        // Get today's scores for average calculation
+        const todayScores = await db.collection('daily_scores')
+          .where('date', '==', today)
+          .get();
+
+        const scores = todayScores.docs.map(doc => doc.data().score);
+        const average = scores.reduce((a, b) => a + b, 0) / scores.length;
+        
+        return {
+          average: Math.round(average),
+          totalPlayers: scores.length
+        };
+      } catch (error) {
+        console.error('Error submitting score:', error);
+        return null;
+      }
+    }
     let roundHistory = [];
 
     // Load items and set up daily challenge
@@ -1278,12 +1335,25 @@
       else if (totalScore >= 2000) grade = 'C';   // 40%+
       else if (totalScore >= 1500) grade = 'D';   // 30%+
       
-      // Use modal popup for game completion
+      // Submit score and get daily average (disabled for now)
+      // const dailyStats = await submitScoreToDatabase(totalScore);
+      
+      let dailyAverageText = '';
+      // if (dailyStats) {
+      //   dailyAverageText = `
+      //     <p style="font-size: 1.1rem; color: #6c757d; margin: 1rem 0; padding: 0.5rem; background: #f8f9fa; border-radius: 5px;">
+      //       📊 Today's Average: <strong>${dailyStats.average.toLocaleString()}</strong> points<br>
+      //       <small>(${dailyStats.totalPlayers} players today)</small>
+      //     </p>
+      //   `;
+      // }
+
       const completionContent = `
         <div style="text-align: center;">
           <h3 style="color: #28a745; font-size: 1.8rem; margin-top: 0;">🎉 Game Complete!</h3>
           <p style="font-size: 1.3rem; color: #495057; margin: 1rem 0;"><strong>Final Score: ${totalScore.toLocaleString()} / 5,000 points</strong></p>
           <p style="font-size: 1.5rem; color: #007acc; margin: 1rem 0; font-weight: bold;">Grade: ${grade}</p>
+          ${dailyAverageText}
           <p style="color: #6c757d; font-style: italic; margin-top: 1.5rem;">Come back tomorrow for a new challenge!</p>
         </div>
       `;

@@ -15,6 +15,7 @@
     "Lowe's": "images/logos/lowes.png",
     "Walmart": "images/logos/walmart.png",
     "Amazon": "images/logos/amazon.png",
+    "AutoZone": "images/logos/autozone.png",
     "Costco": "images/logos/costco.png",
     "REI": "images/logos/rei.png",
     "Pottery Barn": "images/logos/pottery-barn.png",
@@ -171,108 +172,85 @@
     },
     {
       "id": 16,
-      "brand": "Samsonite",
-      "title": "",
-      "description": "",
-      "price": 0,
-      "image": "images/items/item_16.jpg",
-      "store": {
-        "name": "",
-        "logo": "images/logos/placeholder.png"
-      }
+      "brand": "Bose",
+      "title": "QuietComfort Bluetooth Wireless Noise Cancelling Headphones",
+      "description": "Block everything out but the beat with Bose QuietComfort® noise cancelling headphones. Get full noise cancellation with Quiet Mode or still hear what’s going on around you with Aware Mode. New custom modes on these Bluetooth headphones let you adjust noise cancellation to your liking and turning on Wind Block tunes out breezy environments. Just press play on these over ear headphones for high-fidelity sound that’s also customizable with adjustable EQ. You can use the Bose app to crank the bass, tweak the treble, and personalize the settings on these wireless headphones from Bose. Plus, these headphones with built in microphone are crafted with all-day wear and multi-taskers in mind. Enjoy premium materials for comfort, on-ear toggles for ease, an iconic, bold design, and a battery life of up to 24 hours with the Bose QuietComfort® Wireless Bluetooth Noise-Cancelling Headphones.* Includes audio cable with in-line microphone.",
+      "price": 359.99,
+      "image": "images/items/6A.png",
+      "store": "Target"
     },
     {
       "id": 17,
-      "brand": "Samsonite",
-      "title": "",
-      "description": "",
-      "price": 0,
-      "image": "images/items/item_17.jpg",
-      "store": {
-        "name": "",
-        "logo": "images/logos/placeholder.png"
-      }
+      "brand": "Williams Sonoma Signature",
+      "title": "Marble Mortar & Pestle",
+      "description": "Ideal for hand grinding herbs and spices, mortars and pestles have been used for centuries. Our mortar is rough-hewn from solid marble, then shaped, turned and sanded by hand. The pestle is ergonomically shaped of sustainably sourced olivewood, then polished and oiled. Copper details complete both Italian-made pieces.",
+      "price": 99.95,
+      "image": "images/items/6B.png",
+      "store": "Williams Sonoma"
     },
     {
       "id": 18,
-      "brand": "Samsonite",
-      "title": "",
-      "description": "",
-      "price": 0,
-      "image": "images/items/item_18.jpg",
-      "store": {
-        "name": "",
-        "logo": "images/logos/placeholder.png"
-      }
+      "brand": "ENO",
+      "title": "SingleNest Hammock",
+      "description": "Perfect for one, the compact and lightweight ENO SingleNest hammock is expertly constructed with durable yet soft FreeWave™ fabric, making it ideal for solo relaxation on any kind of adventure.",
+      "price": 54.95,
+      "image": "images/items/6C.png",
+      "store": "REI"
     },
     {
       "id": 19,
-      "brand": "Samsonite",
-      "title": "",
-      "description": "",
-      "price": 0,
-      "image": "images/items/item_19.jpg",
-      "store": {
-        "name": "",
-        "logo": "images/logos/placeholder.png"
-      }
+      "brand": "Kohler",
+      "title": "Elliston WaterSense 1.28 GPF Soft Close 2-Piece Toilet",
+      "description": "The Elliston The Complete Solution two-piece chair-height toilet is precision-engineered to deliver uncompromising performance and beautiful form. The 1.28 gpf flush provides water savings without sacrificing performance. Elliston features Revolution 360® swirl flushing technology that keeps your bowl clean longer than a conventional flush, and the innovative AquaPiston® technology offers a patented flush engine that delivers a fast, powerful, and virtually plug-free flush. This Complete Solution package comes with all the necessary installation parts and includes a Quiet-Close™ toilet seat for added convenience.",
+      "price": 259.99,
+      "image": "images/items/7A.png",
+      "store": "Lowe's"
     },
     {
       "id": 20,
-      "brand": "Samsonite",
-      "title": "",
-      "description": "",
-      "price": 0,
-      "image": "images/items/item_20.jpg",
-      "store": {
-        "name": "",
-        "logo": "images/logos/placeholder.png"
-      }
+      "brand": "NOCO",
+      "title": "1,000 Amps 12 Volt Boost Plus UltraSafe Lithium Jump Starter",
+      "description": "A portable lithium-ion battery jump starter pack that delivers 1,000-amps for jump starting a dead battery in seconds. It features a patented safety technology that provides spark-proof connections and reverse polarity protection making safe and easy for anyone to use. It's a powerful battery booster that doubles as a portable power source for recharging USB devices, like a smartphone, tablet and more. Designed for a car, boat, RV, truck and more with gas engines up to 6 liters, and diesel engines up to 3 liters.",
+      "price": 99.99,
+      "image": "images/items/7B.png",
+      "store": "AutoZone"
     },
     {
       "id": 21,
-      "brand": "Samsonite",
-      "title": "",
-      "description": "",
-      "price": 0,
-      "image": "images/items/item_21.jpg",
-      "store": {
-        "name": "",
-        "logo": "images/logos/placeholder.png"
-      }
+      "brand": "Pottery Barn",
+      "title": "Bodhi Mantel Arch Mirror",
+      "description": "36in x 28in. Crafted of cast aluminum with mirror and backed with MDF; finished in Brass and Bronze. D-ring mounting, hardware is included. Imported.",
+      "price": 349.99,
+      "image": "images/items/7C.png",
+      "store": "Pottery Barn"
     },
     {
       "id": 22,
-      "title": "",
-      "description": "",
-      "price": 0,
-      "image": "images/items/item_22.jpg",
-      "store": {
-        "name": "",
-        "logo": "images/logos/placeholder.png"
-      }
+      "brand": "Zojirushi",
+      "title": "Micom 3-Cup Rice Cooker",
+      "description": "The 3-cup Micom Rice Cooker & Warmer features an expanded menu with steel cut oatmeal and GABA brown rice settings for more healthy options. With its compact size and ability to cook as little as 1/2 a cup of rice or oats, this rice cooker is ideal for small families or couples.",
+      "price": 179,
+      "image": "images/items/8A.png",
+      "store": "Macy's"
+      
     },
     {
       "id": 23,
-      "title": "",
-      "description": "",
-      "price": 0,
-      "image": "images/items/item_23.jpg",
-      "store": {
-        "name": "",
-        "logo": "images/logos/placeholder.png"
-      }
+      "brand": "Everlast",
+      "title": "Powercore Dual Bag and Stand",
+      "description": "Get a total body workout whether you want cardio or strength training in the comfort of your own home with the Everlast Powercore Dual Bag and Stand. Place in any room or space with the adjustable height bag platform that accommodates all speed bag sizes. The premium Poly Canvas shell material ensures the bag stays durable for many workouts to come.",
+      "price": 299,
+      "image": "images/items/8B.png",
+      "store": "Dick's Sporting Goods"
     },
     {
       "id": 24,
-      "title": "",
-      "description": "",
-      "price": 0,
-      "image": "images/items/item_24.jpg",
-      "store": {
-        "name": "",
-        "logo": "images/logos/placeholder.png"
-      }
+      "brand": "iRobot",
+      "title": "Roomba 105 Robot Vacuum + AutoEmpty Dock",
+      "description": "The Roomba 105 Vac Robot Vacuum + AutoEmpty Dock is made for every kind of dry floor-cleaning task. The self-emptying dock holds up to 75 days of debris in a bag you just lift out and toss away. The 3-stage cleaning system delivers high-performance cleaning by combining 70X more intense power-lifting suction, an edge-sweeping brush that cleans 20% better, and a multi-surface brush to pick up all kinds of dirt. ClearView LiDAR quickly maps your home for precise coverage. Tap the app, push the robot's buttons or ask your preferred voice assistant for an on-demand clean.",
+      "price": 279,
+      "image": "images/items/8C.png",
+      "store": "Best Buy"
     },
     {
       "id": 25,
@@ -351,7 +329,8 @@
       },
       "items": [
         {
-          "title": "Traeger Pro Series 22-Pellet Grill and Smoker",
+          "brand": "Traeger",
+          "title": "Pro Series 22-Pellet Grill and Smoker",
           "description": "Traeger invented the original wood-fired grill over 30-years ago in Mt. Angel, Oregon and continues to lead the industry as the worlds #1 selling wood-fired grill, perfected by decades of mastering the craft of wood-fired cooking. Fueled by all-natural hardwood pellets and controlled with a digital controller, means from low and slow to hot and fast grilling, you'll fire up deliciously consistent results every single time. The Pro Series 22's robust body style has a sawhorse chassis for added stability, a side-lift bar and all-terrain wheels.",
           "price": 549,
           "image": "images/showcases/1A.jpg",
@@ -392,51 +371,59 @@
       },
       "items": [
         {
-          "title": "Intex Pure Spa 4-Person Inflatable Hot Tub",
+          "brand": "Intex",
+          "title": "Pure Spa 4-Person Inflatable Hot Tub",
           "description": "Let your worries bubble away as you unwind in the total relaxation of the Intex PureSpa Plus Portable Inflatable Hot Tub. The PureSpa provides relaxation at the touch of a button for up to 4-people with its easy-to-use control panel that activates 140 high-powered bubble jets surrounding the interior of the spa for a refreshing massage. The heating system on this inflatable spa adjusts to fit your personal temperature preference, allowing for a stress-free spa experience. This particular PureSpa also features built-in LED lighting, headrests, and a built-in hard water treatment system to keep your spa time comfortable.",
           "price": 699,
-          "image": "images/showcases/2A.jpg"
+          "image": "images/showcases/2A.png",
+          "store": "Home Depot"
         },
         {
-          "title": "Neptune 55-inch Full Sun Outdoor Smart TV",
+          "brand": "Neptune",
+          "title": "55-inch Full Sun Outdoor Smart TV",
           "description": "The Neptune Full Sun Outdoor Smart TV is an all-season solution for outdoor entertainment and living. This outdoor TV is all weather rated, maintenance-free and has an operating temperature range of -22°F to 122°F (-30°C to 50°C). With 4K resolution and an IPS panel, Neptune meets the full UHD specifications, providing exceptional color and video quality from any viewing angle. The Neptune Full Sun Outdoor Smart TV brings everyone’s favorite content and apps outdoors, creating a feature rich outdoor oasis. Whether you want an outdoor TV to enjoy poolside or on your backyard patio, quality outdoor entertainment is now a reality with Neptune.",
           "price": 2999,
-          "image": "images/showcases/2B.png"
+          "image": "images/showcases/2B.png",
+          "store": "Best Buy"
         },
         {
-          "title": "Wireless Charger",
-          "description": "Fast wireless charging pad",
-          "price": 39,
-          "image": "images/showcases/showcase_2_item_3.jpg"
+          "brand": "Solo Stove",
+          "title": "Yukon 2.0 + Stand Bundle",
+          "description": "Smokeless firepit that utilizes Solo Stove's signature 360° Airflow technology that super-heats air to burn off smoke before it can escape the pit. Includes patented Yukon 27” fire pit & removeable base plate, ash pan, and stand. The easy-to-use design requires no complicated assembly and lights up quickly. Designed to burn wood efficiently down to fine ash. Removable ash pan catches all the ash in one place for easy and quick clean-up. Durable 304 stainless steel construction won't cave under the pressure of ultra-hot flames so you can rely on your solo stove for long lasting use. Weighs over 41 pounds for portability. Can be used on patios, grass, wood, and wherever your outdoor adventures take you.",
+          "price": 599,
+          "image": "images/showcases/2C.png",
+          "store": "Dick's Sporting Goods"
         }
       ],
       "total_price": 567
     },
     {
       "id": 3,
-      "title": "",
-      "store": {
-        "name": "",
-        "logo": "images/logos/placeholder.png"
-      },
+      "title": "Campers Paradise",
       "items": [
         {
-          "title": "",
-          "description": "",
-          "price": 0,
-          "image": "images/showcases/showcase_3_item_1.jpg"
+          "brand": "Coleman",
+          "title": "Skylodge 6-Person Camping Tent",
+          "description": "Camping for the first time or just want a tent that sets up quick and easy so you can get the fun started? The Coleman Skylodge 6-Person Instant Camping Tent takes just about a minute to set up.",
+          "price": 290,
+          "image": "images/showcases/3A.png",
+          "store": "REI"
         },
         {
-          "title": "",
-          "description": "",
-          "price": 0,
-          "image": "images/showcases/showcase_3_item_2.jpg"
+          "brand": "Garmin",
+          "title": "inReach Mini 2 Satellite Communicator",
+          "description": "Stay safe and connected to the ones you love when you're miles from cellphone coverage with the Garmin® inReach® Mini 2 Satellite Communicator. Featuring global satellite coverage (subscription required), you can send and receive texts even when there's no cellphone coverage to be found. Built-in TrackBack routing lets you find your way back if you get lost. If an emergency occurs, you can send an interactive SOS to the Garmin IERCC emergency-response center that's staffed every day at all hours. MapShare™ lets you share your location with anyone you desire. The Garmin inReach Mini 2 Satellite Communicator boasts a compact, lightweight design for easy packability, yet it's impact resistant and water-rated to IPX7 so it withstands the wildest adventures. A built-in digital compass delivers accurate heading information, plus you can even request weather forecasts for current or planned destinations. This Garmin satellite communicator has a rechargeable lithium battery that lasts up to 14 days with the default 10-minute tracking interval, while battery life can be extended to 30 days with a 30-minute tracking interval.",
+          "price": 399,
+          "image": "images/showcases/3B.png",
+          "store": "Cabela's"
         },
         {
-          "title": "",
-          "description": "",
-          "price": 0,
-          "image": "images/showcases/showcase_3_item_3.jpg"
+          "brand": "Magellan Outdoors",
+          "title": "Two Burner Stove With Griddle",
+          "description": "Whip up some tasty meals at the campsite with the Magellan Outdoors Two Burner Stove with Griddle. The cooking burner delivers 10,000 BTU and the grill burner delivers 5,000 BTU so you can cook multiple things at once. Compatible with 16.4-ounce propane tanks, the grill has an electric Piezo ignition and flame control so you can adjust the intensity of the heat. Wind guards and an integrated regulator help keep the flames consistent.",
+          "price": 84.99,
+          "image": "images/showcases/3C.png",
+          "store": "Academy Sports"
         }
       ],
       "total_price": 0
