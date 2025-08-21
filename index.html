@@ -633,7 +633,7 @@
       <!-- Game Instructions Box -->
       <div class="game-instructions">
         <h3>📋 How to Play</h3>
-        <p class="game-subtitle">You get 2 chances to guess the retail price of items, receiving points based on how close you end up to the actual retail value. 3 rounds of single items followed by a Showcase. Don't bust or you'll get nothing!</p>
+        <p class="game-subtitle">You get 2 chances to guess the retail price of items, receiving points based on how close you end up to the actual retail value. 3 rounds of single items followed by a Showcase. Get as close as you can!</p>
       </div>
     </div>
   </div>
@@ -828,8 +828,7 @@
 
     // Calculate percentage-based score (more granular - out of 1000 points)
     function calculateScore(guess, actualPrice) {
-      if (guess > actualPrice) return 0; // Bust = 0 points
-      
+      // Use absolute percentage difference for mirrored scoring (no more bust)
       const percentageOff = Math.abs((guess - actualPrice) / actualPrice);
       
       if (percentageOff === 0) return 1000; // Perfect guess
@@ -1181,13 +1180,6 @@
       
       const actualPrice = currentItem ? currentItem.price : currentShowcase.total_price;
 
-      if (guess > actualPrice) {
-        document.getElementById('feedback').textContent = `You guessed $${guess} — BUST! Over the price.`;
-        document.getElementById('guessesRemaining').textContent = '';
-        endRound(false, actualPrice);
-        return;
-      }
-
       // Check for exact match first
       if (guess === actualPrice) {
         document.getElementById('feedback').textContent = `Wow! You were right on the money!`;
@@ -1227,76 +1219,60 @@
     function endRound(finalRound, actualPrice) {
       gameOver = true;
       const lastGuess = guesses[guesses.length - 1];
-      let roundScore = 0;
-
-      if (!finalRound) {
-        let resultText = `<strong>Actual retail price: $${actualPrice}.</strong><br>You busted out! 0 points this round.`;
-        showResultMessage(resultText);
-      } else {
-        const diff = actualPrice - lastGuess;
-        roundScore = calculateScore(lastGuess, actualPrice);
-        
-        // Double points for showcase round (round 4)
-        if (currentRound === 4) {
-          roundScore *= 2;
-        }
-        
-        let resultText = `<strong>Actual retail price: $${actualPrice}.</strong><br>`;
-        
-        if (diff === 0) {
-          resultText += `Wow! You were right on the money with that one! 🎉`;
-        } else {
-          const percentageOff = (diff / actualPrice * 100).toFixed(1);
-          resultText += `You were ${percentageOff}% under.`;
-        }
-        
-        // Add showcase bonus indicator
-        if (currentRound === 4) {
-          resultText += `<br><br>🎯 SHOWCASE DOUBLE POINTS! 🎯`;
-        }
-        
-        // Add colored score
-        const scoreClass = getScoreColorClass(roundScore);
-        resultText += `<br><span class="score-text ${scoreClass}">Round Score: ${roundScore.toLocaleString()} points</span>`;
-        
-        // Show formatted result
-        showResultMessage(resultText);
+      
+      // Always calculate score based on accuracy (no more bust)
+      let roundScore = calculateScore(lastGuess, actualPrice);
+      
+      // Double points for showcase round (round 4)
+      if (currentRound === 4) {
+        roundScore = roundScore * 2;
       }
+      
+      let resultText = `<strong>Actual retail price: $${actualPrice}.</strong><br>`;
+      
+      const diff = Math.abs(actualPrice - lastGuess);
+      if (diff === 0) {
+        resultText += `Wow! You were right on the money with that one! 🎉`;
+      } else {
+        const percentageOff = (diff / actualPrice * 100).toFixed(1);
+        const overOrUnder = lastGuess > actualPrice ? 'over' : 'under';
+        resultText += `You were ${percentageOff}% ${overOrUnder}.`;
+      }
+      
+      // Add showcase bonus indicator
+      if (currentRound === 4) {
+        resultText += `<br><br>🎯 SHOWCASE DOUBLE POINTS! 🎯`;
+      }
+      
+      // Add colored score
+      const scoreClass = getScoreColorClass(roundScore);
+      resultText += `<br><span class="score-text ${scoreClass}">Round Score: ${roundScore.toLocaleString()} points</span>`;
+      
+      // Show formatted result
+      showResultMessage(resultText);
 
       roundScores.push(roundScore);
       totalScore += roundScore;
       
       // Add round to history
-      let scoreClass = 'score-zero';
       let details = '';
-      if (!finalRound) {
-        details = 'Busted (over price)';
+      if (diff === 0) {
+        details = 'Perfect guess!';
       } else {
-        const diff = actualPrice - lastGuess;
         const percentageOff = (diff / actualPrice * 100).toFixed(1);
-        details = diff === 0 ? 'Perfect guess!' : `${percentageOff}% under`;
-        scoreClass = getScoreColorClass(roundScore);
+        const overOrUnder = lastGuess > actualPrice ? 'over' : 'under';
+        details = `${percentageOff}% ${overOrUnder}`;
       }
       
       roundHistory.push({
         score: roundScore,
-        scoreClass: scoreClass,
+        scoreClass: getScoreColorClass(roundScore),
         details: details
       });
       
       // Update sidebar displays
       updateSidebar();
-      showCurrentRoundScore(roundScore, details, scoreClass);
-      
-      document.getElementById('result').innerHTML = resultText.replace(/\n/g, '<br>');
-      
-      // Add colored score display
-      if (finalRound && roundScore > 0) {
-        const scoreElement = document.createElement('div');
-        scoreElement.className = `score-text ${getScoreColorClass(roundScore)}`;
-        scoreElement.textContent = `Round Score: ${roundScore.toLocaleString()} points`;
-        document.getElementById('result').appendChild(scoreElement);
-      }
+      showCurrentRoundScore(roundScore, details, getScoreColorClass(roundScore));
       
       updateRoundDisplay();
     }
