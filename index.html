@@ -9,14 +9,14 @@
   <link href="https://fonts.googleapis.com/css2?family=Koh+Santepheap:wght@100;300;400;700;900&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Capriola&family=DM+Serif+Text:ital@0;1&family=Gabarito:wght@400..900&family=Knewave&family=Lexend:wght@100..900&family=Monofett&family=Monoton&family=Trocchi&display=swap" rel="stylesheet">
   
-  <!-- Firebase SDK - TEMPORARILY DISABLED -->
-  <!-- <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script> -->
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
   <style>
     body { font-family: Arial, sans-serif; text-align: center; padding: 2rem; background: url('background.png') repeat; }
     .game-container { display: flex; gap: 2rem; max-width: 1200px; margin: auto; align-items: flex-start; }
     .game { background: white; padding: 2rem; border-radius: 30px; flex: 1; box-shadow: 14px 14px .25px rgba(0,0,0,0.5); border: 3px solid #000000; }
-    .score-sidebar { background: white; padding: 1.5rem; border-radius: 12px; width: 250px; box-shadow: 14px 14px 1px rgba(0,0,0,0.5); border: 3px solid #000000; }
+    .score-sidebar { background: white; padding: 1.5rem; border-radius: 30px; width: 250px; box-shadow: 14px 14px 1px rgba(0,0,0,0.5); border: 3px solid #000000; }
     
     /* Game Instructions Box - inside score sidebar */
     .game-instructions { 
@@ -28,6 +28,27 @@
       border-top: 3px solid #007acc;
     }
     .game-instructions h3 { margin-top: 0; margin-bottom: 0.75rem; color: #333; font-size: 1rem; }
+    
+    /* How to Play collapsible button */
+    .how-to-play-btn {
+      background: none;
+      border: none;
+      font-size: 1rem;
+      font-weight: bold;
+      color: #333;
+      cursor: pointer;
+      padding: 0;
+      margin: 0;
+      text-align: left;
+      width: 100%;
+      white-space: nowrap;
+    }
+    .how-to-play-btn:hover {
+      color: #007acc;
+    }
+    .how-to-play-content {
+      margin-top: 0.75rem;
+    }
     
             .score-sidebar h3 {
           margin-top: 0;
@@ -163,32 +184,59 @@
     .feedback { margin-top: 1rem; font-weight: bold; }
     .difference { margin-top: 0.5rem; font-size: 1.2rem; color: #666; }
     .guesses-remaining { margin-top: 0.5rem; color: #888; font-size: 0.9rem; }
-    .round-header { background: #707070; color: rgb(255, 255, 255); padding: 0.2rem 2rem; margin: -2rem -2rem 0rem -2rem; border-radius: 27px 27px 0 0; }
+    .round-header { background: #ffffff; color: rgb(255, 255, 255); padding: 0.2rem 2rem; margin: -2rem -2rem 0rem -2rem; border-radius: 27px 27px 0 0; }
     .round-header h2 { 
       font-family: "Lexend", sans-serif; 
       margin: 0.1rem 0; 
       font-size: 3.5rem; 
-      color: #ffffff; 
-      text-shadow: 4px 4px .25px rgba(0,0,0,0.8);
+      color: #999999; 
+      text-shadow: 4px 4px 1px rgba(15, 15, 15, 0.8);
       font-weight: 700;
     }
     .game-subtitle { font-size: 0.9rem; margin: 0; color: #555; font-weight: normal; line-height: 1.6; }
     .progress-container { margin: 1rem 0; display: flex; justify-content: center; }
     .progress-line { display: flex; align-items: center; gap: 1rem; }
-    .progress-point { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem; transition: all 0.3s ease; }
+    .progress-point { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem; font-family: 'Gabarito', sans-serif; transition: all 0.3s ease; }
     .progress-point.completed { background: #28a745; color: white; }
-    .progress-point.current { background: #ffffff; color: #000; transform: scale(1.2); border: 2px solid #000000; box-shadow: 0 0 0 0px rgba(255, 255, 255, 0.3); }
+    .progress-point.current { background: #bdbdbd; color: #000; transform: scale(1.3); border: 0px solid #000000; box-shadow: 0 0 0 0px rgba(255, 255, 255, 0.3); }
     .progress-point.upcoming { background: #2b2c2c; color: white; }
-    .progress-connector { width: 60px; height: 4px; background: #dee2e6; border-radius: 2px; }
+    .progress-connector { width: 60px; height: 4px; background: #7a7a7a; border-radius: 2px; }
     .progress-connector.completed { background: #28a745; }
     .catalog-layout { display: flex; align-items: flex-start; gap: 2rem; margin: 2rem 0; width: fit-content; min-width: 600px; max-width: 100%; }
     .catalog-image { flex: 0 0 auto; }
     .catalog-image img { width: auto; height: 350px; max-width: 400px; object-fit: contain; border-radius: 8px; box-shadow: 3px 3px 8px rgba(0,0,0,0.25); }
     .catalog-details { flex: 1; text-align: left; padding: 0rem 0; min-height: 350px; min-width: 300px; }
     .product-title-container { margin-bottom: 0.6rem; }
+    .product-titles { text-align: center; }
     .catalog-details h3 { margin-top: 0rem; margin-bottom: 0.7rem; font-size: 2.5rem; color: #333; font-family: 'Gabarito', sans-serif; font-weight: bold; }
     .catalog-details h4 { margin-top: -0.5rem; margin-bottom: 0.3rem; font-size: 1.5rem; color: #555; font-family: 'Gabarito', sans-serif; font-weight: normal; }
-    #showcaseTitle { margin-top: 1.5rem; margin-bottom: 0.7rem; font-size: 2.5rem; color: #333; font-family: 'Gabarito', sans-serif; font-weight: bold; }
+    #showcaseTitle { margin-top: 0rem; margin-bottom: 0.7rem; font-size: 2.8rem; color: #5a5a5a; font-family: 'Gabarito', sans-serif; font-weight: bold; }
+    .showcase-title-container { display: flex; align-items: center; justify-content: space-between; margin-top: 1.5rem; margin-bottom: 0.7rem; }
+    .showcase-title-container h3 { margin: 0; font-size: 2.5rem; color: #333; font-family: 'Gabarito', sans-serif; font-weight: bold; }
+    .showcase-navigation-group { 
+      display: flex; 
+      align-items: center; 
+      justify-content: center;
+      gap: 0rem; 
+      background: #d8d8d8; 
+      border: 1px solid #e9ecef; 
+      border-radius: 8px; 
+      padding: 0rem 0rem; 
+    }
+    .gallery-counter { 
+      font-size: 1rem; 
+      color: #414141; 
+      font-weight: bold; 
+      text-align: center; 
+      margin: 0; 
+      padding: 0 0rem; 
+      line-height: 1rem; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      min-height: 2rem;
+      height: 2rem;
+    }
     .catalog-details p { margin: 1rem 0 1.5rem 0; line-height: 1.5; color: #555; }
     .showcase-items { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin: 1rem 0; }
     .showcase-item { border: 1px solid #ddd; border-radius: 8px; padding: 1rem; }
@@ -196,14 +244,29 @@
     .showcase-gallery { display: flex; align-items: center; justify-content: center; gap: 1rem; margin: 1rem 0; }
     .showcase-navigation { display: flex; align-items: center; justify-content: center; gap: 2rem; margin: 1rem 0; }
     .gallery-content { display: flex; align-items: flex-start; gap: 2rem; max-width: 600px; }
-    .gallery-image { width: auto; height: 200px; max-width: 300px; object-fit: contain; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+    .gallery-image { width: auto; height: 200px; max-width: 300px; object-fit: contain; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
     .gallery-info { text-align: left; flex: 1; padding: 1rem 0; }
-    .gallery-info h4 { margin-top: 0; font-size: 1.2rem; color: #000000; }
-    .gallery-info p { margin: 0.5rem 0; line-height: 1.4; color: #555; }
-    .gallery-nav { background: #007acc; color: white; border: none; padding: 0.5rem 1rem; border-radius: 50%; cursor: pointer; font-size: 1.2rem; }
-    .gallery-nav:hover { background: #005a99; }
-    .gallery-nav:disabled { background: #ccc; cursor: not-allowed; }
-    .gallery-counter { font-size: 0.9rem; color: #666; font-weight: bold; }
+    .gallery-info h4 { margin-top: 0; font-size: .5rem; color: #000000; }
+    .gallery-info p { margin: 0.5rem 0; line-height: 1; color: #555; }
+    .gallery-nav { 
+      background: transparent; 
+      color: #666; 
+      border: none; 
+      padding: 0rem; 
+      cursor: pointer; 
+      font-size: 2.5rem; 
+      line-height: 1; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      min-height: 2rem; 
+      min-width: 3rem; 
+      height: 2rem;
+      vertical-align: middle;
+      transform: translateY(-0.8rem);
+    }
+    .gallery-nav:hover { color: #333; }
+    .gallery-nav:disabled { color: #ffffff; cursor: not-allowed; }
     .store-info { display: flex; align-items: center; justify-content: flex-start; gap: 0.5rem; margin: 0.2rem 0; }
     .store-logo { height: 24px; width: auto; max-width: 80px; object-fit: contain; }
     .store-name { font-size: 0.9rem; color: #666; }
@@ -219,6 +282,63 @@
     .score-poor { color: #ff4500; } /* Red orange for 300-499 */
     .score-bad { color: #dc143c; } /* Crimson for 100-299 */
     .score-terrible { color: #8b0000; } /* Dark red for 0-99 */
+    
+    /* Temperature-based feedback colors */
+    .temp-ice-cold { color: #4169e1; font-weight: bold; } /* Blue for ICE COLD */
+    .temp-cold { color: #6495ed; font-weight: bold; } /* Cornflower blue for COLD */
+    .temp-warm { color: #ffa500; font-weight: bold; } /* Orange for WARM */
+    .temp-very-warm { color: #ff6347; font-weight: bold; } /* Tomato for VERY WARM */
+    .temp-red-hot { color: #ff0000; font-weight: bold; } /* Red for RED HOT */
+    
+    /* Quick Preview Controls */
+    .quick-preview-controls {
+      margin: 1rem 0;
+      text-align: center;
+    }
+    .preview-toggle-btn {
+      background: #007acc;
+      color: white;
+      border: none;
+      padding: 0.7rem 1.5rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: bold;
+    }
+    .preview-toggle-btn:hover {
+      background: #005a99;
+    }
+    .preview-round-nav {
+      margin-top: 1rem;
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .preview-round-btn {
+      background: #28a745;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+    .preview-round-btn:hover {
+      background: #1e7e34;
+    }
+    .preview-exit-btn {
+      background: #dc3545;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+    .preview-exit-btn:hover {
+      background: #c82333;
+    }
     
     .game-complete-container {
       background: #f8f9fa;
@@ -300,6 +420,26 @@
     .clickable-image:hover { opacity: 0.9; }
     .hidden { display: none; }
     
+    /* Portrait orientation - stack layout vertically */
+    @media (orientation: portrait) {
+      .game-container { 
+        flex-direction: column; 
+        gap: 1.5rem; 
+      }
+      
+      .game,
+      .score-sidebar { 
+        width: 100%; 
+        flex: none;
+        order: 2; 
+        box-sizing: border-box;
+      }
+      
+      .game {
+        order: 1;
+      }
+    }
+
     /* Mobile Responsive Design */
     @media (max-width: 768px) {
       body { 
@@ -311,6 +451,9 @@
       .game-container { 
         flex-direction: column; 
         gap: 1rem; 
+        max-width: 100%;
+        margin: 0 auto;
+        box-sizing: border-box;
       }
       
       /* Make game area full width */
@@ -341,6 +484,44 @@
         order: 2; 
         padding: 1rem; 
         box-shadow: 8px 8px 1px rgba(0,0,0,0.5); 
+        box-sizing: border-box;
+        max-width: 100%;
+        overflow-x: hidden;
+      }
+      
+      /* Ensure all sidebar content is properly contained */
+      .score-sidebar * {
+        max-width: 100%;
+        box-sizing: border-box;
+      }
+      
+      /* Prevent any text overflow */
+      .round-history-item,
+      .score-history,
+      .game-instructions {
+        max-width: 100%;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+      }
+      
+      /* Center score tracker and round history content */
+      .score-sidebar {
+        text-align: center;
+      }
+      
+      .score-sidebar h3,
+      .score-sidebar div {
+        text-align: center;
+      }
+      
+      .score-history,
+      .round-history-item {
+        text-align: center;
+      }
+      
+      /* Center the progress tracker */
+      .progress-tracker {
+        justify-content: center;
       }
       
       /* Stack catalog layout vertically */
@@ -388,13 +569,18 @@
       
       /* Mobile-friendly input */
       .guess-input-container { 
-        flex-direction: column; 
-        gap: 1rem; 
+        flex-direction: row; 
+        gap: 0.5rem; 
         align-items: center; 
+        justify-content: center;
+        flex-wrap: nowrap;
       }
       
       .catalog-price-input { 
-        width: 200px; 
+        width: auto; 
+        min-width: 120px;
+        flex: 1;
+        max-width: 200px;
       }
       
       .catalog-price-input input { 
@@ -422,9 +608,9 @@
       
       /* Gallery navigation for showcases */
       .gallery-nav { 
-        min-width: 50px; 
-        min-height: 50px; 
-        font-size: 1.5rem; 
+        min-width: 60px; 
+        min-height: 60px; 
+        font-size: 2.5rem; 
       }
       
       /* Store info adjustments */
@@ -507,13 +693,43 @@
         width: 30px; 
       }
     }
+
+    /* Small portrait devices - edge to edge display */
+    @media (orientation: portrait) and (max-width: 768px) {
+      body { 
+        padding: 0; 
+        margin: 0;
+      }
+      
+      .game { 
+        border-radius: 0;
+        border: none;
+        box-shadow: none;
+        margin: 0;
+        padding: 1rem;
+      }
+      
+      .score-sidebar {
+        border-radius: 0;
+        border: none;
+        box-shadow: none;
+        margin: 0;
+        padding: 1rem;
+      }
+      
+      /* Remove container margins */
+      .game-container {
+        margin: 0;
+        gap: 0;
+      }
+    }
   </style>
 </head>
 <body>
   <div class="game-container">
     <div class="game">
       <div class="round-header">
-        <h2>GUESS THE RIGHT PRICE</h2>
+        <h2>NAME YOUR PRICE</h2>
         <div class="progress-container">
           <div class="progress-line">
             <div class="progress-point current" id="point1">1</div>
@@ -537,6 +753,18 @@
             <a href="?preview=7" class="preview-nav-btn">+1 Week</a>
             <a href="?preview=30" class="preview-nav-btn">+1 Month</a>
             <a href="?preview=-1" class="preview-nav-btn">Yesterday</a>
+          </div>
+        </div>
+        
+        <!-- Quick Preview Button -->
+        <div class="quick-preview-controls" id="quickPreviewControls" style="display: none;">
+          <button id="togglePreviewMode" class="preview-toggle-btn" onclick="togglePreviewMode()">🔍 Quick Preview All Rounds</button>
+          <div class="preview-round-nav" id="previewRoundNav" style="display: none;">
+            <button onclick="previewRound(1)" class="preview-round-btn">Round 1</button>
+            <button onclick="previewRound(2)" class="preview-round-btn">Round 2</button>
+            <button onclick="previewRound(3)" class="preview-round-btn">Round 3</button>
+            <button onclick="previewRound(4)" class="preview-round-btn">Showcase</button>
+            <button onclick="exitPreviewMode()" class="preview-exit-btn">Exit Preview</button>
           </div>
         </div>
       </div>
@@ -569,12 +797,14 @@
 
     <!-- Showcase Display -->
     <div id="showcaseView" class="hidden">
-      <h3 id="showcaseTitle">Showcase Showdown</h3>
+      <div class="showcase-title-container">
+        <h3 id="showcaseTitle">Showcase Showdown</h3>
+      </div>
       
-      <div class="showcase-navigation">
+      <div class="showcase-navigation-group">
         <button class="gallery-nav" id="prevBtn" onclick="navigateGallery(-1)">‹</button>
         <div class="gallery-counter">
-          <span id="galleryCounter">1 of 3</span>
+          <span id="galleryCounter">Item 1 of 3</span>
         </div>
         <button class="gallery-nav" id="nextBtn" onclick="navigateGallery(1)">›</button>
       </div>
@@ -596,7 +826,7 @@
         </div>
       </div>
       
-      <p><strong>Guess the total price of all items!</strong></p>
+      <p><strong>Guess the total price of all three items!</strong></p>
       <div class="guess-input-container showcase-centered">
         <div class="catalog-price-input">
           <input type="number" id="guessInputShowcase" placeholder="0.00" />
@@ -632,8 +862,10 @@
       
       <!-- Game Instructions Box -->
       <div class="game-instructions">
-        <h3>📋 How to Play</h3>
-        <p class="game-subtitle">You get 2 chances to guess the retail price of items, receiving points based on how close you end up to the actual retail value. 3 rounds of single items followed by a Showcase. Get as close as you can!</p>
+        <button class="how-to-play-btn" onclick="toggleHowToPlay()">📋 How to Play ▼</button>
+        <div id="howToPlayContent" class="how-to-play-content" style="display: none;">
+          <p class="game-subtitle">You get 2 chances to guess the retail price of items, receiving points based on how close you end up to the actual retail value. 3 rounds of single items followed by a Showcase. Get as close as you can!</p>
+        </div>
       </div>
     </div>
   </div>
@@ -659,14 +891,14 @@
     let totalScore = 0;
     let roundScores = [];
 
-    // Firebase Configuration - TEMPORARILY DISABLED FOR TESTING
+    // Firebase Configuration
     const firebaseConfig = {
-      // apiKey: "AIzaSyAtu2q3L9Z3HrFidfUvPwnTwqEP8il1r2o",
-      // authDomain: "the-cost-is-correct.firebaseapp.com",
-      // projectId: "the-cost-is-correct",
-      // storageBucket: "the-cost-is-correct.firebasestorage.app",
-      // messagingSenderId: "853113000023",
-      // appId: "1:853113000023:web:6c508d56412993f8bd9312"
+      apiKey: "AIzaSyAtu2q3L9Z3HrFidfUvPwnTwqEP8il1r2o",
+      authDomain: "the-cost-is-correct.firebaseapp.com",
+      projectId: "the-cost-is-correct",
+      storageBucket: "the-cost-is-correct.firebasestorage.app",
+      messagingSenderId: "853113000023",
+      appId: "1:853113000023:web:6c508d56412993f8bd9312"
     };
 
     // Initialize Firebase (only if config is provided)
@@ -674,6 +906,20 @@
     if (firebaseConfig.apiKey) {
       firebase.initializeApp(firebaseConfig);
       db = firebase.firestore();
+    }
+
+    // How to Play toggle function
+    function toggleHowToPlay() {
+      const content = document.getElementById('howToPlayContent');
+      const button = document.querySelector('.how-to-play-btn');
+      
+      if (content.style.display === 'none' || content.style.display === '') {
+        content.style.display = 'block';
+        button.textContent = '📋 How to Play ▲';
+      } else {
+        content.style.display = 'none';
+        button.textContent = '📋 How to Play ▼';
+      }
     }
 
     // Daily Average Functions
@@ -1088,7 +1334,7 @@
       
       // Update counter
       document.getElementById('galleryCounter').textContent = 
-        `${currentGalleryIndex + 1} of ${currentShowcase.items.length}`;
+        `Item ${currentGalleryIndex + 1} of ${currentShowcase.items.length}`;
       
       // Update navigation buttons
       document.getElementById('prevBtn').disabled = currentGalleryIndex === 0;
@@ -1194,20 +1440,26 @@
         // Calculate how far off the guess is as a percentage
         const percentageOff = Math.abs(actualPrice - guess) / actualPrice;
         let underMessage = '';
+        let tempClass = '';
         
         if (percentageOff >= 0.5) {
-          underMessage = 'WAY FAR OFF';
-        } else if (percentageOff >= 0.35) {
-          underMessage = 'PRETTY FAR OFF';
+          underMessage = 'ICE COLD';
+          tempClass = 'temp-ice-cold';
         } else if (percentageOff >= 0.25) {
-          underMessage = 'UNDER';
+          underMessage = 'COLD';
+          tempClass = 'temp-cold';
         } else if (percentageOff >= 0.15) {
-          underMessage = 'A BIT UNDER';
+          underMessage = 'WARM';
+          tempClass = 'temp-warm';
+        } else if (percentageOff >= 0.05) {
+          underMessage = 'VERY WARM';
+          tempClass = 'temp-very-warm';
         } else {
-          underMessage = 'SLIGHTLY UNDER';
+          underMessage = 'RED HOT';
+          tempClass = 'temp-red-hot';
         }
         
-        document.getElementById('feedback').textContent = `You guessed $${guess}. You are ${underMessage}. Try again!`;
+        document.getElementById('feedback').innerHTML = `You guessed $${guess}. You are <span class="${tempClass}">${underMessage}</span>. Try again!`;
         document.getElementById('guessesRemaining').textContent = `Guesses remaining: ${remaining}`;
       } else {
         document.getElementById('guessesRemaining').textContent = '';
@@ -1364,6 +1616,188 @@
       modal.appendChild(closeButton);
       backdrop.appendChild(modal);
       document.body.appendChild(backdrop);
+    }
+    
+    // Preview Mode Functions
+    let previewMode = false;
+    let originalState = {};
+    
+    function togglePreviewMode() {
+      if (!previewMode) {
+        // Check if gameData is loaded
+        if (!gameData || !gameData.single_items || !gameData.showcases) {
+          alert('Game data not loaded yet. Please wait a moment and try again.');
+          return;
+        }
+        
+        previewMode = true;
+        
+        // Save current game state
+        originalState = {
+          currentRound: currentRound,
+          gameData: gameData,
+          currentItem: currentItem,
+          currentShowcase: currentShowcase
+        };
+        
+        // Show preview navigation
+        document.getElementById('previewRoundNav').style.display = 'flex';
+        document.getElementById('togglePreviewMode').textContent = '❌ Exit Preview Mode';
+        
+        // Start with round 1
+        previewRound(1);
+      } else {
+        exitPreviewMode();
+      }
+    }
+    
+    function previewRound(roundNum) {
+      if (!previewMode) return;
+      
+      console.log('Previewing round:', roundNum); // Debug
+      
+      // Hide current views
+      document.getElementById('singleItemView').classList.add('hidden');
+      document.getElementById('showcaseView').classList.add('hidden');
+      if (document.getElementById('gameCompleteView')) {
+        document.getElementById('gameCompleteView').classList.add('hidden');
+      }
+      
+      // Update round display
+      if (typeof updateProgressLine === 'function') {
+        updateProgressLine(roundNum);
+      }
+      currentRound = roundNum;
+      
+      if (roundNum <= 3) {
+        // Show single item for rounds 1-3
+        const item = gameData.single_items[roundNum - 1];
+        console.log('Preview item:', item); // Debug
+        
+        if (item) {
+          currentItem = item;
+          
+          // Update single item display
+          document.getElementById('itemImage').src = item.image;
+          
+          // Handle both old format (title only) and new format (brand + title)
+          const hasBrand = item.brand && item.brand.trim() !== '';
+          const hasTitle = item.title && item.title.trim() !== '';
+          
+          if (hasBrand && hasTitle) {
+            document.getElementById('itemBrand').textContent = item.brand.trim();
+            document.getElementById('itemTitle').textContent = item.title.trim();
+          } else if (hasTitle) {
+            const fullTitle = item.title.trim();
+            const parts = fullTitle.split(' ');
+            if (parts.length >= 2) {
+              document.getElementById('itemBrand').textContent = parts[0];
+              document.getElementById('itemTitle').textContent = parts.slice(1).join(' ');
+            } else {
+              document.getElementById('itemBrand').textContent = fullTitle;
+              document.getElementById('itemTitle').textContent = '';
+            }
+          }
+          
+          // Update store info
+          if (item.store && gameData.stores && gameData.stores[item.store]) {
+            const storeInfo = gameData.stores[item.store];
+            document.getElementById('itemStoreLogo').src = storeInfo.logo;
+            document.getElementById('itemStoreName').textContent = storeInfo.name;
+          }
+          
+          // Update description
+          document.getElementById('itemDescription').textContent = item.description || '';
+          
+          document.getElementById('singleItemView').classList.remove('hidden');
+          
+          // Hide guess controls in preview
+          const guessContainer = document.querySelector('#singleItemView .guess-input-container');
+          if (guessContainer) guessContainer.style.display = 'none';
+        }
+      } else if (roundNum === 4) {
+        // Show showcase
+        const showcase = gameData.showcases[0];
+        console.log('Preview showcase:', showcase); // Debug
+        
+        if (showcase) {
+          currentShowcase = showcase;
+          currentGalleryIndex = 0; // Start with first item
+          
+          // Set the showcase title
+          document.getElementById('showcaseTitle').textContent = showcase.title || 'Showcase Showdown';
+          
+          // Update showcase display
+          updateGalleryDisplay();
+          
+          document.getElementById('showcaseView').classList.remove('hidden');
+          
+          // Hide guess controls in preview
+          const guessContainer = document.querySelector('#showcaseView .guess-input-container');
+          if (guessContainer) guessContainer.style.display = 'none';
+        }
+      }
+      
+      // Add preview indicator
+      const indicator = document.createElement('div');
+      indicator.id = 'previewIndicator';
+      indicator.style.cssText = `
+        position: fixed; top: 10px; right: 10px; background: #ff6b35; color: white; 
+        padding: 0.5rem 1rem; border-radius: 20px; font-weight: bold; z-index: 1000;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+      `;
+      indicator.textContent = `🔍 PREVIEW: Round ${roundNum}`;
+      
+      // Remove existing indicator
+      const existingIndicator = document.getElementById('previewIndicator');
+      if (existingIndicator) existingIndicator.remove();
+      
+      document.body.appendChild(indicator);
+    }
+    
+    function exitPreviewMode() {
+      previewMode = false;
+      
+      // Hide preview navigation
+      document.getElementById('previewRoundNav').style.display = 'none';
+      document.getElementById('togglePreviewMode').textContent = '🔍 Quick Preview All Rounds';
+      
+      // Show guess controls again
+      const guessContainers = document.querySelectorAll('.guess-input-container');
+      guessContainers.forEach(container => container.style.display = '');
+      
+      // Remove preview indicator
+      const indicator = document.getElementById('previewIndicator');
+      if (indicator) indicator.remove();
+      
+      // Hide all views first
+      document.getElementById('singleItemView').classList.add('hidden');
+      document.getElementById('showcaseView').classList.add('hidden');
+      if (document.getElementById('gameCompleteView')) {
+        document.getElementById('gameCompleteView').classList.add('hidden');
+      }
+      
+      // Restore original state and restart current round
+      if (originalState.currentRound) {
+        currentRound = originalState.currentRound;
+        currentItem = originalState.currentItem;
+        currentShowcase = originalState.currentShowcase;
+        
+        // Restart the current round properly
+        if (typeof startRound === 'function') {
+          startRound();
+        } else {
+          // Fallback - just reload the game
+          if (typeof loadGameData === 'function') {
+            loadGameData();
+          }
+        }
+      } else {
+        // If no original state, just reload
+        if (typeof loadGameData === 'function') {
+          loadGameData();
+        }
+      }
     }
   </script>
 </body>
