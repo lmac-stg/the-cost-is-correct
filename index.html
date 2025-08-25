@@ -46,6 +46,24 @@
     .how-to-play-btn:hover {
       color: #007acc;
     }
+    
+    /* Contact Us button - similar to How to Play */
+    .contact-us-btn {
+      background: none;
+      border: none;
+      font-size: 1rem;
+      font-weight: bold;
+      color: #333;
+      cursor: pointer;
+      padding: 0;
+      margin: 0;
+      text-align: left;
+      width: 100%;
+      white-space: nowrap;
+    }
+    .contact-us-btn:hover {
+      color: #007acc;
+    }
     .how-to-play-content {
       margin-top: 0.75rem;
     }
@@ -194,6 +212,7 @@
       font-weight: 700;
     }
     .game-subtitle { font-size: 0.9rem; margin: 0; color: #555; font-weight: normal; line-height: 1.6; }
+    
     .progress-container { margin: 1rem 0; display: flex; justify-content: center; }
     .progress-line { display: flex; align-items: center; gap: 1rem; }
     .progress-point { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem; font-family: 'Gabarito', sans-serif; transition: all 0.3s ease; }
@@ -864,7 +883,16 @@
       <div class="game-instructions">
         <button class="how-to-play-btn" onclick="toggleHowToPlay()">📋 How to Play ▼</button>
         <div id="howToPlayContent" class="how-to-play-content" style="display: none;">
-          <p class="game-subtitle">You get 2 chances to guess the retail price of items, receiving points based on how close you end up to the actual retail value. 3 rounds of single items followed by a Showcase. Get as close as you can!</p>
+          <p class="game-subtitle">You’ll have 2 chances to guess the retail price of each item. Points are awarded based on how close your final guess is to the actual price. Play through 3 single-item rounds, then finish with a Showcase round where you guess the total of multiple items. The closer you are, the higher your score!</p>
+        </div>
+      </div>
+      
+      <!-- Contact Us Section -->
+      <div class="game-instructions" style="margin-top: 1rem;">
+        <button class="contact-us-btn" onclick="toggleContactUs()">📧 Contact Us ▼</button>
+        <div id="contactUsContent" class="how-to-play-content" style="display: none;">
+          <p class="game-subtitle">Made by Luke Machaj</p>
+          <p class="game-subtitle">Email me at <a href="mailto:nameyourpriceluke@gmail.com" style="color: #007acc;">nameyourpriceluke@gmail.com</a> with any inquiries</p>
         </div>
       </div>
     </div>
@@ -919,6 +947,19 @@
       } else {
         content.style.display = 'none';
         button.textContent = '📋 How to Play ▼';
+      }
+    }
+
+    function toggleContactUs() {
+      const content = document.getElementById('contactUsContent');
+      const button = document.querySelector('.contact-us-btn');
+      
+      if (content.style.display === 'none' || content.style.display === '') {
+        content.style.display = 'block';
+        button.textContent = '📧 Contact Us ▲';
+      } else {
+        content.style.display = 'none';
+        button.textContent = '📧 Contact Us ▼';
       }
     }
 
@@ -1442,10 +1483,10 @@
         let underMessage = '';
         let tempClass = '';
         
-        if (percentageOff >= 0.5) {
+        if (percentageOff >= 0.6) {
           underMessage = 'ICE COLD';
           tempClass = 'temp-ice-cold';
-        } else if (percentageOff >= 0.25) {
+        } else if (percentageOff >= 0.29) {
           underMessage = 'COLD';
           tempClass = 'temp-cold';
         } else if (percentageOff >= 0.15) {
@@ -1800,5 +1841,6 @@
       }
     }
   </script>
+
 </body>
 </html>

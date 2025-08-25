@@ -1,4 +1,40 @@
 {
+  "stores": {
+    "Williams Sonoma": "images/logos/williams-sonoma.png",
+    "Apple Store": "images/logos/apple.png",
+    "Academy Sports": "images/logos/academy.png",
+    "IKEA": "images/logos/ikea.png",
+    "GameStop": "images/logos/gamestop.png",
+    "Sur La Table": "images/logos/sur-la-table.png",
+    "Crate & Barrel": "images/logos/crate-barrel.png",
+    "Ashley Furniture": "images/logos/ashley.png",
+    "B&H Photo": "images/logos/bh-photo.png",
+    "Target": "images/logos/target.png",
+    "Best Buy": "images/logos/best-buy.png",
+    "Home Depot": "images/logos/home-depot.png",
+    "Lowe's": "images/logos/lowes.png",
+    "Walmart": "images/logos/walmart.png",
+    "JCPenney": "images/logos/jcpenney.png",
+    "Amazon": "images/logos/amazon.png",
+    "AutoZone": "images/logos/autozone.png",
+    "Costco": "images/logos/costco.png",
+    "REI": "images/logos/rei.png",
+    "Pottery Barn": "images/logos/pottery-barn.png",
+    "West Elm": "images/logos/west-elm.png",
+    "CB2": "images/logos/cb2.png",
+    "Anthropologie": "images/logos/anthropologie.png",
+    "Urban Outfitters": "images/logos/urban-outfitters.png",
+    "Nordstrom": "images/logos/nordstrom.png",
+    "Macy's": "images/logos/macys.png",
+    "Bed Bath & Beyond": "images/logos/bed-bath-beyond.png",
+    "Wayfair": "images/logos/wayfair.png",
+    "Overstock": "images/logos/overstock.png",
+    "World Market": "images/logos/world-market.png",
+    "Bloomingdales": "images/logos/bloomingdales.png",
+    "Honda Powersports": "images/logos/honda.png",
+    "Dick's Sporting Goods": "images/logos/dicks.jpg",
+    "Cabela's": "images/logos/cabelas.png"
+  },
   "single_items": [
     {
       "id": 1,
@@ -197,6 +233,7 @@
       "price": 179,
       "image": "images/items/8A.png",
       "store": "Macy's"
+      
     },
     {
       "id": 23,
@@ -216,7 +253,7 @@
       "image": "images/items/8C.png",
       "store": "Best Buy"
     },
-    {
+     {
       "brand": "Smith",
       "title": "Engage Mips Bike Helmet",
       "description": "Big berms, rock gardens or flowy rollers—no matter the trail, get after it with confidence in the Smith Engage Mips bike helmet. This updated, feature-packed helmet is designed for everyday riding.",
@@ -262,72 +299,25 @@
       "id": 29
     },
     {
-      "brand": "LEGO",
-      "title": "City F1 Truck with RB20 and AMR24 F1 Cars",
-      "description": "This premium-quality LEGO® City F1® toy vehicle playset offers an exciting experience for young fans of Formula 1. This playset is perfect for aspiring builders who love both construction and high-speed racing action. Kids will enjoy building the truck and cars and using realistic details, such as the opening side panels, to stage their own exciting Formula 1 race moments. The LEGO® Builder app provides detailed instructions to guide young builders through the process, allowing them to zoom in and rotate the models in 3D as they go.",
-      "price": 99.99,
-      "image": "images/items/10C.png",
-      "store": "Macy's",
-      "id": 30
-    },
-    {
-      "brand": "GoPro",
-      "title": "HERO Action Camera",
-      "description": "Our smallest 4K camera features a rugged super light design that’s a fraction of the size and weight of other GoPro cameras, but still waterproof to 16ft. Streamlined controls let you record 4K video, immersive photos and slow-motion shots with a press of the shutter button. After recording, play back your video on the GoPro Quik app. HyperSmooth video stabilization will automatically smooth out the shakes in your footage. Plug HERO in to charge and your footage will be uploaded to the cloud, turned into a highlight video and sent to your phone so you can relive your adventure and share the fun.",
-      "price": 219.99,
-      "image": "images/items/11A.png",
-      "store": "Best Buy",
-      "id": 31
-    },
-    {
-      "brand": "Crosley",
-      "title": "Carter 7-In-1 Record Player",
-      "description": "The listening opportunities are endless with Crosley’s 7-in-1 record player. With so many ways to listen to your favorite tracks, this record player is equipped with a 3-speed turntable, a CD player, AM/FM radio and Bluetooth connectivity that allows you to stream your favorite playlists and connect to external speakers for an amplified sound.",
-      "price": 199,
-      "image": "images/items/11B.png",
-      "store": "Urban Outfitters",
-      "id": 32
-    },
-    {
-      "brand": "VitaMix",
-      "title": "Explorian Series E310 Blender (48 fl oz)",
-      "description": "Explore how easy it is to make healthy, whole-food recipes at home. From appetizers to dessert, the 48-ounce container is ideal for blending medium batches for small family meals. Create Every Texture: Ten variable speeds allow you to refine every texture with culinary precision, from the smoothest purées to the heartiest soups. Pulse Feature: With the Pulse feature, layer coarse chops over smooth purées for heartier recipes, such as chunky pasta sauce or thick vegetable soups. High-Performance Motor: The Powerful 2 HP motor can handle even tough ingredients to create high-quality blends. Easy Cleaning: With a drop of dish soap and warm water, your Vitamix® machine can clean itself in 30 to 60 seconds—no disassembly required.",
-      "price": 379.95,
-      "image": "images/items/11C.png",
-      "store": "Bed Bath & Beyond",
-      "id": 33
-    },
-    {
-      "brand": "Toro",
-      "title": "Recycler 21in Gas Self-Propelled Lawn Mower 140cc",
-      "description": "The Toro Recycler series is a patented cutting technology that brings an innovative mulching technique that make your clippings ultra-fine to provide moisture and nutrients that feed back into your lawn. We call these nutrient rich grass clippings, Lawn Vitamins. The Toro Recycler 21-in Self-Propelled Gas Lawn Mower features variable-speed functionality and rear wheel drive with a 140cc Briggs & Stratton engine. Great for homeowners seeking a lawn mower with a high-quality, user-friendly design. Toro products are known for smart features and proven dependability you can count on. Includes added feature: Hassle-Free Maintenance - no oil changes for the life of the engine, ever, Just Top it Off. Count on it.",
-      "price": 399.99,
-      "image": "images/items/12A.png",
-      "store": "Lowe's",
-      "id": 34
-    },
-    {
-      "brand": "COACH",
-      "title": "Brooklyn 28 Suede Shoulder Bag",
-      "description": "Brushed hardware and supple suede distinguish a slouchy shoulder bag furnished with a spacious interior perfect for storing your daily essentials.",
-      "price": 295,
-      "image": "images/items/12B.png",
-      "store": "Nordstrom",
-      "id": 35
-    },
-    {
-      "brand": "Cangshan",
-      "title": "Maya Bread Knife 9in",
-      "description": "Handcrafted by award-winning cutlery maker Cangshan, the Maya collection is a celebration of beauty, precision and performance. The sleek knives feature razor-sharp blades forged from proprietary X-7 Damascus steel and comfortable handles made of African blackwood. Designed to slice bread, bagels and other baked goods, this knife has a long, serrated blade that cuts easily through crispy crusts without compressing soft interiors.",
-      "price": 129.95,
-      "image": "images/items/12C.png",
-      "store": "Williams Sonoma",
-      "id": 36
+      "id": 30,
+      "title": "",
+      "description": "",
+      "price": 0,
+      "image": "images/items/item_30.jpg",
+      "store": {
+        "name": "",
+        "logo": "images/logos/placeholder.png"
+      }
     }
   ],
   "showcases": [
     {
+      "id": 1,
       "title": "Backyard Bash",
+      "store": {
+        "name": "Williams Sonoma",
+        "logo": "images/logos/williams-sonoma.png"
+      },
       "items": [
         {
           "brand": "Traeger",
@@ -335,27 +325,33 @@
           "description": "Traeger invented the original wood-fired grill over 30-years ago in Mt. Angel, Oregon and continues to lead the industry as the worlds #1 selling wood-fired grill, perfected by decades of mastering the craft of wood-fired cooking. Fueled by all-natural hardwood pellets and controlled with a digital controller, means from low and slow to hot and fast grilling, you'll fire up deliciously consistent results every single time. The Pro Series 22's robust body style has a sawhorse chassis for added stability, a side-lift bar and all-terrain wheels.",
           "price": 549,
           "image": "images/showcases/1A.jpg",
-          "store": "Home Depot"
+          "store": {
+            "name": "Home Depot",
+            "logo": "images/logos/home-depot.png"
+          }
         },
         {
-          "brand": "HEATMAXX",
-          "title": "40,000 BTU Floorstanding Liquid Propane Patio Heater",
+          "title": "HEATMAXX 40,000 BTU Floorstanding Liquid Propane Patio Heater",
           "description": "40,000 BTU Pyramid Flame Gas Patio Heater Grab some appetizers and a bottle of wine and get ready to entertain with the HeatMaxx Pyramid Patio Heater. Add a touch of class to your backyard, patio, deck, garden or restaurant with this elegantly designed outdoor propane heater. Great for providing heat while also enhancing the aesthetics of your outdoor space. Give your outdoor space the upscale flare it deserves with the Pyramid Patio Heater.",
           "price": 326,
           "image": "images/showcases/1B.png",
-          "store": "Lowe's"
+          "store": {
+            "name": "Lowe's",
+            "logo": "images/logos/lowes.png"
+          }
         },
         {
-          "brand": "Fermob",
-          "title": "Bistro Table + Chair Dining Set",
+          "title": "Fermob Bistro Table + Chair Dining Set",
           "description": "Table and 2 chairs are made of 98% recycled lacquered steel with an umbrella hole. Features UV-resistant powder-coating for outdoor use. Foot protectors keeps floors from being scratched. Folds for easy storage. Can be used indoors and outdoors.",
           "price": 700,
           "image": "images/showcases/1C.png",
-          "store": "Pottery Barn"
+          "store": {
+            "name": "Pottery Barn",
+            "logo": "images/logos/pottery-barn.png"
+          }
         }
       ],
-      "total_price": 1575,
-      "id": 1
+      "total_price": 497
     },
     {
       "id": 2,
@@ -424,97 +420,91 @@
       "total_price": 0
     },
     {
-      "title": "Hollywood Home Theatre",
+      "id": 4,
+      "title": "",
+      "store": {
+        "name": "",
+        "logo": "images/logos/placeholder.png"
+      },
       "items": [
         {
-          "brand": "Epson",
-          "title": "Home Cinema 3800 4K 3LCD Projector ",
-          "description": "Enjoy an immersive entertainment experience with this Epson Home Cinema 4K projector. The three-chip design with 3LCD technology delivers high-quality visuals, while the built-in dual 10W speakers produce crisp sound. This Epson Home Cinema 4K projector has HDMI and USB ports for connecting a wide variety of devices, and Bluetooth connectivity lets you play media files from your mobile device.",
-          "price": 1799.99,
-          "image": "images/showcases/4A.png",
-          "store": "Best Buy"
+          "title": "",
+          "description": "",
+          "price": 0,
+          "image": "images/showcases/showcase_4_item_1.jpg"
         },
         {
-          "brand": "IKEA",
-          "title": "Muren Recliner",
-          "description": "Take a seat in MUREN recliner and get a pleasant surprise. It is adjustable to three positions and comes with an inbuilt footstool. While sitting, use your back to press against the backrest - it lowers and the footstool lifts up. Now relax and enjoy!",
-          "price": 479,
-          "image": "images/showcases/4B.png",
-          "store": "IKEA"
+          "title": "",
+          "description": "",
+          "price": 0,
+          "image": "images/showcases/showcase_4_item_2.jpg"
         },
         {
-          "brand": "Nostalgia",
-          "title": "59in Kettle Popcorn Machine Concession Cart",
-          "description": "Modeled after the antique popcorn carts of the early 1900s, this beauty features a 10 oz. kettle with built-in stirring system, and pops the most delectable batches of popcorn time and time again. The tempered glass door and windows with lighted interior let everyone view each kernel being popped. Keep supplies on hand in the convenient storage compartment located in the base. If space is an issue the top is removable and becomes a countertop unit.",
-          "price": 299,
-          "image": "images/showcases/4C.png",
-          "store": "Home Depot"
+          "title": "",
+          "description": "",
+          "price": 0,
+          "image": "images/showcases/showcase_4_item_3.jpg"
         }
       ],
-      "total_price": 2577.99,
-      "id": 4
+      "total_price": 0
     },
     {
-      "title": "Gamer Dungeon",
+      "id": 5,
+      "title": "",
+      "store": {
+        "name": "",
+        "logo": "images/logos/placeholder.png"
+      },
       "items": [
         {
-          "brand": "Herman Miller",
-          "title": "Sayl Chair",
-          "description": "“I knew that creating a work chair is one of design’s greatest challenges, an intimidating project in every possible way,” says Swiss designer Yves Béhar. “There is no place to hide in a chair. Every part serves a structural or tactile purpose.” With a ventilated back for air circulation and tilt limiter that lets you adjust tension and range to your liking, this chair accomplishes a great deal with only the essentials. Sayl is 90% recyclable.",
-          "price": 895,
-          "image": "images/showcases/6A.png",
-          "store": "DWR"
+          "title": "",
+          "description": "",
+          "price": 0,
+          "image": "images/showcases/showcase_5_item_1.jpg"
         },
         {
-          "brand": "Samsung",
-          "title": "Odyssey 34in G5 1000R Curved QHD FreeSync Monitor",
-          "description": "Odyssey G5’s lightning-fast 165Hz refresh rate ensures flawlessly smooth action scenes even in games with high frame rates. The Odyssey G5 range allows you to make the most out of the games you love to play, at a fantastic price point.",
-          "price": 399.99,
-          "image": "images/showcases/6B.png",
-          "store": "Best Buy"
+          "title": "",
+          "description": "",
+          "price": 0,
+          "image": "images/showcases/showcase_5_item_2.jpg"
         },
         {
-          "brand": "IKEA",
-          "title": "Utespelare",
-          "description": "Raise the large, sturdy UTESPELARE gaming desk to a height that optimally suits you. The metal mesh at the back of the table top allows air to circulate and cool your PC when the match heats up.",
-          "price": 269.99,
-          "image": "images/showcases/6C.png",
-          "store": "IKEA"
+          "title": "",
+          "description": "",
+          "price": 0,
+          "image": "images/showcases/showcase_5_item_3.jpg"
         }
       ],
-      "total_price": 1564.98,
-      "id": 5
+      "total_price": 0
     },
     {
-      "title": "Kitchen Makeover",
+      "id": 6,
+      "title": "",
+      "store": {
+        "name": "",
+        "logo": "images/logos/placeholder.png"
+      },
       "items": [
         {
-          "brand": "KitchenAid",
-          "title": "Artisan Mini Stand Mixer with Flex Edge Beater, 3.5qt",
-          "description": "Lighter and smaller, yet just as powerful as the KitchenAid® Classic™ tilt-head mixer, the Artisan® Mini features a 3.5 quart bowl to make up to 5 dozen cookies in a single batch using the flat beater (28g dough each), and 10 speeds to thoroughly and quickly mix, knead and whip ingredients. Use the versatile power hub to turn the mixer into a culinary center with over 10 optional attachments, from food grinders to pasta makers and more.",
-          "price": 449.95,
-          "image": "images/showcases/5A.png",
-          "store": "Williams Sonoma"
+          "title": "",
+          "description": "",
+          "price": 0,
+          "image": "images/showcases/showcase_6_item_1.jpg"
         },
         {
-          "brand": "LG",
-          "title": "MAX 4-Door French Door Smart Refrigerator with Full-Convert Drawer Standard-Depth 28.6 cu.ft",
-          "description": "This 4-door Standard-Depth MAX refrigerator doesn’t just give you space—it brings a new level of organization, flexibility and style to your kitchen. Sleek flat-panel doors with dual handle design for easy opening add a premium feel. A slam-resistant door design allows the refrigerator doors to close softly and quietly. French doors on top offer easy access to fresh foods, while double drawers below means no more rummaging through stacks of frozen items. The versatile Full-Convert Drawer converts from fridge to freezer with just a touch, with 5 temperature settings for optimal storage for a range of fresh or frozen items.",
-          "price": 2399.99,
-          "image": "images/showcases/5B.png",
-          "store": "Best Buy"
+          "title": "",
+          "description": "",
+          "price": 0,
+          "image": "images/showcases/showcase_6_item_2.jpg"
         },
         {
-          "brand": "IKEA",
-          "title": "Skogsta Table & Nordviken Chairs (6)",
-          "description": "Every table is unique, with varying grain pattern and natural color shifts that are part of the charm of wood.\n\nAcacia has a rich brown color and distinctive grain pattern. It is highly durable, resistant to scratches and water, ideal for heavy-use. Acacia slightly darkens with age.\n\nThe high backrest and the curved shape of the chair, provide good lower back support and prevent your back from getting tired. You sit comfortably, longer and with a relaxed posture.\n\nFor a softer seat or to add a personal touch to the room, complete with a chair pad in the style and color of your choice.\n\nSturdy and durable solid wood chair frame.",
-          "price": 939,
-          "image": "images/showcases/5C.png",
-          "store": "IKEA"
+          "title": "",
+          "description": "",
+          "price": 0,
+          "image": "images/showcases/showcase_6_item_3.jpg"
         }
       ],
-      "total_price": 3788.9399999999996,
-      "id": 6
+      "total_price": 0
     },
     {
       "id": 7,
@@ -632,40 +622,5 @@
       ],
       "total_price": 0
     }
-  ],
-  "stores": {
-    "Williams Sonoma": "images/logos/williams-sonoma.png",
-    "Apple Store": "images/logos/apple.png",
-    "Academy Sports": "images/logos/academy.png",
-    "IKEA": "images/logos/ikea.png",
-    "GameStop": "images/logos/gamestop.png",
-    "Sur La Table": "images/logos/sur-la-table.png",
-    "Crate & Barrel": "images/logos/crate-barrel.png",
-    "Ashley Furniture": "images/logos/ashley.png",
-    "B&H Photo": "images/logos/bh-photo.png",
-    "Target": "images/logos/target.png",
-    "Best Buy": "images/logos/best-buy.png",
-    "Home Depot": "images/logos/home-depot.png",
-    "Lowe's": "images/logos/lowes.png",
-    "Walmart": "images/logos/walmart.png",
-    "Amazon": "images/logos/amazon.png",
-    "AutoZone": "images/logos/autozone.png",
-    "Costco": "images/logos/costco.png",
-    "REI": "images/logos/rei.png",
-    "Pottery Barn": "images/logos/pottery-barn.png",
-    "West Elm": "images/logos/west-elm.png",
-    "CB2": "images/logos/cb2.png",
-    "Anthropologie": "images/logos/anthropologie.png",
-    "Urban Outfitters": "images/logos/urban-outfitters.png",
-    "Nordstrom": "images/logos/nordstrom.png",
-    "Macy's": "images/logos/macys.png",
-    "Bed Bath & Beyond": "images/logos/bed-bath-beyond.png",
-    "Wayfair": "images/logos/wayfair.png",
-    "Overstock": "images/logos/overstock.png",
-    "World Market": "images/logos/world-market.png",
-    "Bloomingdales": "images/logos/bloomingdales.png",
-    "Honda Powersports": "images/logos/honda.png",
-    "Dick's Sporting Goods": "images/logos/dicks.jpg",
-    "Cabela's": "images/logos/cabelas.png"
-  }
+  ]
 }
