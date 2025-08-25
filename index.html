@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>GUESS THE RIGHT PRICE</title>
+  <title>Name Your Price!</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Koh+Santepheap:wght@100;300;400;700;900&display=swap" rel="stylesheet">
@@ -931,9 +931,35 @@
 
     // Initialize Firebase (only if config is provided)
     let db = null;
+    console.log('Checking Firebase configuration...');
+    console.log('API Key present:', !!firebaseConfig.apiKey);
+    console.log('Firebase object available:', typeof firebase !== 'undefined');
+    
     if (firebaseConfig.apiKey) {
-      firebase.initializeApp(firebaseConfig);
-      db = firebase.firestore();
+      try {
+        firebase.initializeApp(firebaseConfig);
+        db = firebase.firestore();
+        console.log('✅ Firebase initialized successfully!');
+        
+        // Test connection with more detailed logging
+        console.log('Testing Firestore connection...');
+        db.collection('daily_scores').limit(1).get()
+          .then((querySnapshot) => {
+            console.log('✅ Firestore connection successful!');
+            console.log('Documents found:', querySnapshot.size);
+          })
+          .catch(error => {
+            console.error('❌ Firestore connection failed:');
+            console.error('Error code:', error.code);
+            console.error('Error message:', error.message);
+            console.error('Full error:', error);
+          });
+      } catch (initError) {
+        console.error('❌ Firebase initialization failed:');
+        console.error('Init error:', initError);
+      }
+    } else {
+      console.log('❌ Firebase API key not found');
     }
 
     // How to Play toggle function
@@ -965,20 +991,26 @@
 
     // Daily Average Functions
     async function submitScoreToDatabase(score) {
+      console.log('📊 submitScoreToDatabase called with score:', score);
+      console.log('Database object exists:', !!db);
+      
       if (!db) {
-        console.log('Firebase not configured - score not submitted');
+        console.log('❌ Firebase not configured - score not submitted');
         return null;
       }
       
       try {
         const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD format
+        console.log('📅 Submitting score for date:', today);
         
         // Submit the score
+        console.log('💾 Adding score to Firestore...');
         await db.collection('daily_scores').add({
           score: score,
           date: today,
           timestamp: firebase.firestore.FieldValue.serverTimestamp()
         });
+        console.log('✅ Score submitted successfully!');
 
         // Get today's scores for average calculation
         const todayScores = await db.collection('daily_scores')
@@ -1594,7 +1626,7 @@
       }
     });
 
-    function showFinalResults() {
+    async function showFinalResults() {
       let grade = 'F';
       if (totalScore >= 4500) grade = 'A+';  // 90%+
       else if (totalScore >= 4000) grade = 'A';   // 80%+
@@ -1604,18 +1636,18 @@
       else if (totalScore >= 2000) grade = 'C';   // 40%+
       else if (totalScore >= 1500) grade = 'D';   // 30%+
       
-      // Submit score and get daily average (disabled for now)
-      // const dailyStats = await submitScoreToDatabase(totalScore);
+      // Submit score and get daily average
+      const dailyStats = await submitScoreToDatabase(totalScore);
       
       let dailyAverageText = '';
-      // if (dailyStats) {
-      //   dailyAverageText = `
-      //     <p style="font-size: 1.1rem; color: #6c757d; margin: 1rem 0; padding: 0.5rem; background: #f8f9fa; border-radius: 5px;">
-      //       📊 Today's Average: <strong>${dailyStats.average.toLocaleString()}</strong> points<br>
-      //       <small>(${dailyStats.totalPlayers} players today)</small>
-      //     </p>
-      //   `;
-      // }
+      if (dailyStats) {
+        dailyAverageText = `
+          <p style="font-size: 1.1rem; color: #6c757d; margin: 1rem 0; padding: 0.5rem; background: #f8f9fa; border-radius: 5px;">
+            📊 Today's Average: <strong>${dailyStats.average.toLocaleString()}</strong> points<br>
+            <small>(${dailyStats.totalPlayers} players today)</small>
+          </p>
+        `;
+      }
 
       const completionContent = `
         <div style="text-align: center;">
