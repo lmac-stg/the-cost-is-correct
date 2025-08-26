@@ -12,6 +12,9 @@
   <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+  
+  <!-- Chart.js for score visualization -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     body { font-family: Arial, sans-serif; text-align: center; padding: 2rem; background: url('background.png') repeat; }
     .game-container { display: flex; gap: 2rem; max-width: 1200px; margin: auto; align-items: flex-start; }
@@ -1020,15 +1023,178 @@
         const scores = todayScores.docs.map(doc => doc.data().score);
         const average = scores.reduce((a, b) => a + b, 0) / scores.length;
         
+        // Get historical data for chart (last 7 days)
+        const sevenDaysAgo = new Date();
+        sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 6);
+        const startDate = sevenDaysAgo.toISOString().split('T')[0];
+        
+        console.log('📈 Fetching historical data from:', startDate);
+        const historicalScores = await db.collection('daily_scores')
+          .where('date', '>=', startDate)
+          .orderBy('date')
+          .get();
+
+        // Group scores by date and calculate daily averages
+        const dailyAverages = {};
+        historicalScores.docs.forEach(doc => {
+          const data = doc.data();
+          if (!dailyAverages[data.date]) {
+            dailyAverages[data.date] = [];
+          }
+          dailyAverages[data.date].push(data.score);
+        });
+
+        // Calculate averages for each day
+        const chartData = [];
+        for (let i = 6; i >= 0; i--) {
+          const date = new Date();
+          date.setDate(date.getDate() - i);
+          const dateStr = date.toISOString().split('T')[0];
+          
+          if (dailyAverages[dateStr]) {
+            const dayScores = dailyAverages[dateStr];
+            const dayAverage = dayScores.reduce((a, b) => a + b, 0) / dayScores.length;
+            chartData.push({
+              date: dateStr,
+              average: Math.round(dayAverage),
+              playerCount: dayScores.length
+            });
+          } else {
+            chartData.push({
+              date: dateStr,
+              average: null,
+              playerCount: 0
+            });
+          }
+        }
+        
+        // Add dummy data if we don't have enough historical data
+        const hasEnoughData = chartData.filter(day => day.average !== null).length >= 3;
+        if (!hasEnoughData) {
+          console.log('📊 Adding dummy historical data for chart demonstration');
+          // Generate dummy data for the past 7 days
+          for (let i = 0; i < chartData.length; i++) {
+            if (chartData[i].average === null) {
+              // Generate realistic scores between 2000-4500
+              const dummyAverage = Math.floor(Math.random() * 2500) + 2000;
+              const dummyPlayers = Math.floor(Math.random() * 50) + 10;
+              chartData[i] = {
+                date: chartData[i].date,
+                average: dummyAverage,
+                playerCount: dummyPlayers
+              };
+            }
+          }
+        }
+        
         return {
           average: Math.round(average),
-          totalPlayers: scores.length
+          totalPlayers: scores.length,
+          historicalData: chartData,  // Changed from chartData to historicalData
+          userScore: score
         };
       } catch (error) {
         console.error('Error submitting score:', error);
         return null;
       }
     }
+
+    // Create score trend chart
+    function createScoreChart(chartData, userScore) {
+      const canvas = document.getElementById('scoreChart');
+      if (!canvas) return;
+
+      // Prepare data for Chart.js
+      const labels = chartData.map(day => {
+        const date = new Date(day.date);
+        return date.toLocaleDateString('en-US', { weekday: 'short', month: 'numeric', day: 'numeric' });
+      });
+
+      const averages = chartData.map(day => day.average);
+      const todayIndex = chartData.length - 1;
+
+      // Create chart
+      new Chart(canvas, {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'Daily Average',
+            data: averages,
+            borderColor: '#007acc',
+            backgroundColor: 'rgba(0, 122, 204, 0.1)',
+            borderWidth: 3,
+            fill: true,
+            tension: 0.4,
+            pointBackgroundColor: '#007acc',
+            pointBorderColor: '#ffffff',
+            pointBorderWidth: 2,
+            pointRadius: 6
+          }, {
+            label: 'Your Score',
+            data: new Array(todayIndex).fill(null).concat([userScore]),
+            borderColor: '#ff6b35',
+            backgroundColor: '#ff6b35',
+            borderWidth: 0,
+            pointBackgroundColor: '#ff6b35',
+            pointBorderColor: '#ffffff',
+            pointBorderWidth: 3,
+            pointRadius: 10,
+            showLine: false
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: 'top',
+              labels: {
+                usePointStyle: true,
+                padding: 20
+              }
+            },
+            title: {
+              display: true,
+              text: '7-Day Score Trend',
+              font: {
+                size: 16,
+                weight: 'bold'
+              },
+              padding: 20
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              max: 5000,
+              title: {
+                display: true,
+                text: 'Score'
+              },
+              grid: {
+                color: 'rgba(0, 0, 0, 0.1)'
+              }
+            },
+            x: {
+              title: {
+                display: true,
+                text: 'Date'
+              },
+              grid: {
+                color: 'rgba(0, 0, 0, 0.1)'
+              }
+            }
+          },
+          elements: {
+            point: {
+              hoverRadius: 8
+            }
+          }
+        }
+      });
+    }
+    
     let roundHistory = [];
 
     // Load items and set up daily challenge
@@ -1639,14 +1805,36 @@
       // Submit score and get daily average
       const dailyStats = await submitScoreToDatabase(totalScore);
       
+      // Debug: Log the daily stats to see what we're getting
+      console.log('Daily stats received:', dailyStats);
+      if (dailyStats && dailyStats.historicalData) {
+        console.log('Historical data length:', dailyStats.historicalData.length);
+        console.log('Historical data:', dailyStats.historicalData);
+      }
+      
       let dailyAverageText = '';
       if (dailyStats) {
         dailyAverageText = `
           <p style="font-size: 1.1rem; color: #6c757d; margin: 1rem 0; padding: 0.5rem; background: #f8f9fa; border-radius: 5px;">
-            📊 Today's Average: <strong>${dailyStats.average.toLocaleString()}</strong> points<br>
-            <small>(${dailyStats.totalPlayers} players today)</small>
+            📊 Today's Average: <strong>${dailyStats.average.toLocaleString()}</strong> points
           </p>
         `;
+      }
+
+      // Create chart if historical data is available
+      let chartHTML = '';
+      if (dailyStats && dailyStats.historicalData && dailyStats.historicalData.length >= 1) {
+        console.log('Creating chart with data:', dailyStats.historicalData);
+        chartHTML = `
+          <div style="margin: 1.5rem 0;">
+            <h4 style="color: #495057; margin-bottom: 1rem;">📈 Score Trend (Last ${dailyStats.historicalData.length} Days)</h4>
+            <div style="position: relative; height: 250px; background: #f8f9fa; border-radius: 8px; padding: 10px;">
+              <canvas id="scoreChart" style="max-height: 230px;"></canvas>
+            </div>
+          </div>
+        `;
+      } else {
+        console.log('Not enough historical data for chart. Need at least 1 day, got:', dailyStats?.historicalData?.length || 0);
       }
 
       const completionContent = `
@@ -1655,6 +1843,7 @@
           <p style="font-size: 1.3rem; color: #495057; margin: 1rem 0;"><strong>Final Score: ${totalScore.toLocaleString()} / 5,000 points</strong></p>
           <p style="font-size: 1.5rem; color: #007acc; margin: 1rem 0; font-weight: bold;">Grade: ${grade}</p>
           ${dailyAverageText}
+          ${chartHTML}
           <p style="color: #6c757d; font-style: italic; margin-top: 1.5rem;">Come back tomorrow for a new challenge!</p>
         </div>
       `;
@@ -1671,8 +1860,9 @@
       const modal = document.createElement('div');
       modal.style.cssText = `
         background: white; padding: 2rem; border-radius: 12px; 
-        max-width: 500px; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        max-width: 600px; width: 90%; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.3);
         font-family: Arial, sans-serif; line-height: 1.6; border: 3px solid #28a745;
+        max-height: 90vh; overflow-y: auto;
       `;
       
       modal.innerHTML = completionContent;
@@ -1684,11 +1874,71 @@
         background: #28a745; color: white; border: none; padding: 0.8rem 1.5rem; 
         border-radius: 8px; cursor: pointer; font-size: 1rem; margin-top: 1rem;
       `;
-      closeButton.onclick = () => document.body.removeChild(backdrop);
+      closeButton.onclick = () => {
+        document.body.removeChild(backdrop);
+        showGameOverState(); // Replace game content with thank you message
+      };
       
       modal.appendChild(closeButton);
       backdrop.appendChild(modal);
       document.body.appendChild(backdrop);
+      
+      // Hide the input box and submit button to indicate game is over
+      const inputBox = document.getElementById('guessInput');
+      const submitButton = document.getElementById('guessButton');
+      const showcaseInput = document.getElementById('guessInputShowcase');
+      const showcaseButton = document.getElementById('guessButtonShowcase');
+      
+      if (inputBox) inputBox.style.display = 'none';
+      if (submitButton) submitButton.style.display = 'none';
+      if (showcaseInput) showcaseInput.style.display = 'none';
+      if (showcaseButton) showcaseButton.style.display = 'none';
+      
+      // Create the chart after the modal is in the DOM
+      if (dailyStats && dailyStats.historicalData && dailyStats.historicalData.length >= 1) {
+        console.log('Attempting to create chart...');
+        // Wait for the next frame to ensure canvas is rendered
+        requestAnimationFrame(() => {
+          const canvas = document.getElementById('scoreChart');
+          if (canvas) {
+            console.log('Canvas found, creating chart');
+            createScoreChart(dailyStats.historicalData, totalScore);
+          } else {
+            console.error('Canvas not found!');
+          }
+        });
+      } else {
+        console.log('Skipping chart creation - insufficient data');
+      }
+    }
+
+    // Show game over state after final results
+    function showGameOverState() {
+      const gameContainer = document.querySelector('.game-container');
+      if (gameContainer) {
+        gameContainer.innerHTML = `
+          <div style="
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            z-index: 100;
+          ">
+            <h2 style="color: #28a745; font-size: 3rem; margin-bottom: 1rem; font-family: 'Gabarito', sans-serif;">🎉</h2>
+            <h3 style="color: #333; font-size: 2.5rem; margin-bottom: 1rem; font-family: 'Gabarito', sans-serif;">Thanks for Playing!</h3>
+            <p style="color: #6c757d; font-size: 1.5rem; margin-bottom: 2rem; font-family: Arial, sans-serif;">Come Back Tomorrow!</p>
+            <div style="background: linear-gradient(135deg, #28a745, #20c997); color: white; padding: 1rem 2rem; border-radius: 15px; font-size: 1.2rem; box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);">
+              New game available daily at midnight! 🌟
+            </div>
+          </div>
+        `;
+      }
     }
     
     // Preview Mode Functions

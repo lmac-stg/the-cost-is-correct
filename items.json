@@ -517,120 +517,128 @@
       "id": 6
     },
     {
-      "id": 7,
-      "title": "",
-      "store": {
-        "name": "",
-        "logo": "images/logos/placeholder.png"
-      },
+      "title": "Mamma Mia!",
       "items": [
         {
-          "title": "",
-          "description": "",
-          "price": 0,
-          "image": "images/showcases/showcase_7_item_1.jpg"
+          "brand": "ITA Airways",
+          "title": "Nonstop, Round Trip flight for 2 from NYC to Rome. Economy Classic.",
+          "description": "JFK - FCO Round Trip Flight for 2 passengers.",
+          "price": 1640,
+          "image": "images/showcases/7A.png",
+          "store": "ITA Airways"
         },
         {
-          "title": "",
-          "description": "",
-          "price": 0,
-          "image": "images/showcases/showcase_7_item_2.jpg"
+          "brand": "Colosseum",
+          "title": "Guided tour for 2",
+          "description": "Tickets to an official 2.5 hour guided tour of the historic Colosseum in Rome. ",
+          "price": 93,
+          "image": "images/showcases/7B.png",
+          "store": "Colosseum"
         },
         {
-          "title": "",
-          "description": "",
-          "price": 0,
-          "image": "images/showcases/showcase_7_item_3.jpg"
+          "brand": "Fujifilm",
+          "title": "Instax mini Evo Instant Film Camera",
+          "description": "The INSTAX MINI EVO Instant Film camera is designed to be compact and portable, making it easy to take with you wherever you go. It is small enough to fit in your pocket or bag. With 10 lens effect and 10 film effect options, you can create the exact vision you have in mind. Experiment with vivid colors, go retro, add softness to the focus or lose the color. Got a print worthy memory? The INSTAX MINI Evo Brown Instant Film Camera prints photos at 600 DPI for a stunning image quality. Every single image you print on the INSTAX MINI Evo Brown Instant Film Camera can be saved in a handy digital format on your Smartphone, ideal for sharing and posting.",
+          "price": 216.99,
+          "image": "images/showcases/7C.png",
+          "store": "Best Buy"
         }
       ],
-      "total_price": 0
+      "total_price": 1949.99,
+      "id": 7
     },
     {
-      "id": 8,
-      "title": "",
-      "store": {
-        "name": "",
-        "logo": "images/logos/placeholder.png"
-      },
+      "title": "Gone Fishin'",
       "items": [
         {
-          "title": "",
-          "description": "",
-          "price": 0,
-          "image": "images/showcases/showcase_8_item_1.jpg"
+          "brand": "Ascend",
+          "title": "12T Sit-On-Top Kayak",
+          "description": "To craft the updated Ascend® 12T Sit-On-Top Kayak, our designers took our most popular sit-on-top kayak and refined it to be even more stable, more functional, and more comfortable. The advanced tunnel design with a wide transom and flared bow sections bring a fishing kayak so stable, you can stand up and cast from it. The same design also produces outstanding tracking and couldn't-be-easier paddling. While you're standing, you'll stay comfortable thanks to the non-skid foam deck mat. Port and starboard accessory-mounting rails and a recessed bow storage area with flush-mounted bungees allow endless accessorizing for true customization. Port flush-mounted paddle holders ensure easy-reach paddling, and the midship deep-molded drink holder/storage and watertight storage areas deliver reliable containment for your vital gear. Further improving this Kayak directly from customer feedback, our designers improved durability in the dual flush-mounted rod holders with rod leash eyelets (leash not included); large stern tank well with D-rings; recessed stern storage area with flush-mounted bungees; 6 scupper drains with plugs; and the deluxe, adjustable seating system delivers more convenience and comfort than ever, and brings a removable design to go from the water to onshore in seconds. The Ascend 12T Kayak even works perfectly with the RedHead® waterfowl blind (not included), making this high-performance Ascend kayak the perfect option for duck hunting in addition to all your angling and adventuring demands. There's simply no kayak better than an Ascend.",
+          "price": 749,
+          "image": "images/showcases/8A.png",
+          "store": "Cabela's"
         },
         {
-          "title": "",
-          "description": "",
-          "price": 0,
-          "image": "images/showcases/showcase_8_item_2.jpg"
+          "brand": "Yeti",
+          "title": "Roadie 15 Cooler",
+          "description": "Compact and easy to carry, the YETI Roadie 15 cooler can pack all your favorite essentials, cans and wine bottles. Plus, the portable design makes it great for days at the beach or trips on the water.",
+          "price": 200,
+          "image": "images/showcases/8B.png",
+          "store": "REI"
         },
         {
-          "title": "",
-          "description": "",
-          "price": 0,
-          "image": "images/showcases/showcase_8_item_3.jpg"
+          "brand": "Lowrance",
+          "title": "Eagle Eye 9\" Fish Finder with Live Sonar",
+          "description": "SEE IT LIVE, CATCH IT LIVE. Eagle Eye™ is the world’s most accessible fish finder with live sonar. Focused Forward and Down live sonar combines with CHIRP & DownScan Imaging™ with FishReveal™ in one transducer, along with detailed C-MAP® charting on a crystal clear IPS high resolution 9” screen. The Eagle Eye™ brings best-in-class live imaging and lets you watch fish react to your lure in real time. With a smooth and consistent image, the Eagle Eye provides all the detail you need to know when to strike",
+          "price": 999,
+          "image": "images/showcases/showcase_8_item_3.jpg",
+          "store": "Dick's Sporting Goods"
         }
       ],
-      "total_price": 0
+      "total_price": 1948,
+      "id": 8
     },
     {
-      "id": 9,
-      "title": "",
-      "store": {
-        "name": "",
-        "logo": "images/logos/placeholder.png"
-      },
+      "title": "Future Pilot",
       "items": [
         {
-          "title": "",
-          "description": "",
-          "price": 0,
-          "image": "images/showcases/showcase_9_item_1.jpg"
+          "brand": "DJI",
+          "title": "Mini 3 Fly More Combo",
+          "description": "A compact, foldable design weighing under 249 g makes DJI Mini 3 a great companion on any outing. Capture in 4K HDR, and with an extended battery life of up to 40 minutes, you can capture your surroundings in stunning detail without worrying about low battery.",
+          "price": 1149,
+          "image": "images/showcases/9A.png",
+          "store": "Best Buy"
         },
         {
-          "title": "",
-          "description": "",
-          "price": 0,
-          "image": "images/showcases/showcase_9_item_2.jpg"
+          "brand": "Turtle Beach",
+          "title": "VelocityOne Flightstick",
+          "description": "The Turtle Beach® VelocityOne® Flightstick for Xbox Series X|S, Xbox One & Windows PCs equips you with immersive, accurate controls for air and space flight simulation & combat games on Xbox and PC. Ultra-smooth main stick provides precise control, and two multi-function levers control main engine power and adjustment of control surfaces. A precise nano trim wheel allows for fine tuning of attitude and the OLED Flight Management Display makes for easy adjustments to control profiles. With 27 programmable buttons, a rapid-fire trigger and more, you’re well-armed with a multitude of controls.",
+          "price": 139,
+          "image": "images/showcases/9B.png",
+          "store": "Target"
         },
         {
-          "title": "",
-          "description": "",
-          "price": 0,
-          "image": "images/showcases/showcase_9_item_3.jpg"
+          "brand": "Microsoft",
+          "title": "Flight Simulator: 40th Anniversary Deluxe Edition",
+          "description": "From gliders and helicopters to wide-body jets, including a sophisticated and true-to-life Airbus A-310 airliner, fly highly detailed and accurate aircraft in the Microsoft Flight Simulator 40th Anniversary Edition. The Microsoft Flight Simulator: Deluxe 40th Anniversary Edition includes everything from the Standard Edition plus 5 additional highly accurate planes with unique flight models and 5 additional handcrafted airports. Celebrate the history of aviation and our franchise with many new features and enhancements. Test your piloting skills against the challenges of night flying, real-time atmospheric simulation, and live weather in a dynamic and living world. Create your flight plan to anywhere on the planet. The 40th Anniversary update introduces famous historical aircraft, classic airports and missions, helicopters, gliders, and more! There’s never been a more exciting time to experience the joy of flight. The sky is calling!",
+          "price": 89,
+          "image": "images/showcases/9C.png",
+          "store": "Best Buy"
         }
       ],
-      "total_price": 0
+      "total_price": 1377,
+      "id": 9
     },
     {
-      "id": 10,
-      "title": "",
-      "store": {
-        "name": "",
-        "logo": "images/logos/placeholder.png"
-      },
+      "title": "Snow Day",
       "items": [
         {
-          "title": "",
-          "description": "",
-          "price": 0,
-          "image": "images/showcases/showcase_10_item_1.jpg"
+          "brand": "Salomon",
+          "title": "QST 94 Black Skis",
+          "description": "With wide tips and 94 mm waists, these Salomon QST Black skis bridge the gap between all-mountain and freeride. They offer grip and stability on piste, while providing extra float when needed.",
+          "price": 750,
+          "image": "images/showcases/10A.png",
+          "store": "REI"
         },
         {
-          "title": "",
-          "description": "",
-          "price": 0,
-          "image": "images/showcases/showcase_10_item_2.jpg"
+          "brand": "IKON",
+          "title": "2025/26 IKON Pass",
+          "description": "Lift Pass. Seek endless adventure across 60+ unique destinations worldwide. Get the most access and no blackout dates. Unlimited Access at 18 Destinations\nSeek the unforgettable throughout 18 destinations that continually refill the need for adventure.\n\nSteamboat, CO Winter Park Resort, CO Copper Mountain Resort, CO Arapahoe Basin, CO\nExpanded Access\nEldora Mountain Resort, CO Palisades Tahoe, CA Mammoth Mountain, CA June Mountain, CA Big Bear Mountain Resort, CA Snow Valley, CA Stratton, VT Sugarbush Resort, VT Snowshoe, WV Crystal Mountain, WA Schweitzer, ID Tremblant, QC Blue Mountain, ON Solitude Mountain Resort, UT",
+          "price": 1429,
+          "image": "images/showcases/10B.png",
+          "store": "IKON"
         },
         {
-          "title": "",
-          "description": "",
-          "price": 0,
-          "image": "images/showcases/showcase_10_item_3.jpg"
+          "brand": "Smith",
+          "title": "I/O MAG ChromaPop Snow Goggles with gogglesoc",
+          "description": "Make sure you can see where you're going. The Smith I/O MAG ChromaPop snow goggles with gogglesoc boost color and contrast so every wind lip, landing and tree glade is as sharp as possible.",
+          "price": 283,
+          "image": "images/showcases/10C.png",
+          "store": "REI"
         }
       ],
-      "total_price": 0
+      "total_price": 2462,
+      "id": 10
     }
   ],
   "stores": {
@@ -652,7 +660,9 @@
     "AutoZone": "images/logos/autozone.png",
     "Costco": "images/logos/costco.png",
     "REI": "images/logos/rei.png",
+    "DWR": "images/logos/dwr.png",
     "Pottery Barn": "images/logos/pottery-barn.png",
+    "ITA Airways": "images/logos/ita-airways.png",
     "West Elm": "images/logos/west-elm.png",
     "CB2": "images/logos/cb2.png",
     "Anthropologie": "images/logos/anthropologie.png",
